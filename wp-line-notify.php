@@ -3,7 +3,7 @@
  * Plugin Name: WordPress LINE Notify
  * Plugin URI:  https://github.com/mark2me/wp-line-notify
  * Description: This plugin can send a alert message by LINE Notify
- * Version:     0.1
+ * Version:     0.1.1
  * Author:      Simon Chuang
  * Author URI:  https://github.com/mark2me
  * License:     GPLv2
@@ -41,22 +41,26 @@ class sig_line_notify{
 
         add_filter("plugin_action_links_".plugin_basename(__FILE__) ,array($this, 'plugin_settings_link') );
 
-        if( $this->options['comments'] == 1 ){
+        if( isset($this->options['comments']) && $this->options['comments'] == 1 ){
             add_action( 'comment_post' , array($this, 'new_comments_alert') , 10 ,2  );
         }
 
-        if( $this->options['woocommerce'] == 1 ){
+        if( isset($this->options['woocommerce']) && $this->options['woocommerce'] == 1 ){
             include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
             if(is_plugin_active( 'woocommerce/woocommerce.php' )) {
                 add_action( 'woocommerce_new_order', array($this,'new_woocommerce_order_alert') , 10, 3 );
 	        }
 	    }
 
-	    if( $this->options['user_register'] == 1 ){
+	    if( isset($this->options['user_register']) && $this->options['user_register'] == 1 ){
             add_action( 'user_register' , array($this,'new_user_register_alert') , 10 , 1 );
         }
 
-    }
+        if( isset($this->options['wpcf7']) && $this->options['wpcf7'] == 1 ){
+            add_action("wpcf7_before_send_mail", array($this, "new_wpcf7_message"));
+        }
+
+     }
 
     function add_option_menu(){
         add_options_page(
@@ -113,7 +117,10 @@ class sig_line_notify{
                         <th scope="row"><?php _e('Woocommerce:', $this->plugin_name)?></th>
                         <td>
                             <input type="checkbox" id="chcek_order" name="<?php echo SIG_LINE_NOTIFY_OPTIONS?>[woocommerce]" value="1" <?php echo checked( 1, $this->options['woocommerce'], false )?>>
-                            <label for="chcek_order"><?php _e('Add new order.', $this->plugin_name)?></label>
+                            <label for="chcek_order"><?php _e('Add new order.', $this->plugin_name)?></label><?php
+                                include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
+                                if(!is_plugin_active( 'woocommerce/woocommerce.php' )) echo "&nbsp;&nbsp;<p class=\"description\">(".__('This plugin is not install or active.', $this->plugin_name).")</p>";
+                            ?>
                         </td>
                     </tr>
 
@@ -122,6 +129,16 @@ class sig_line_notify{
                         <td>
                             <input type="checkbox" id="chcek_user" name="<?php echo SIG_LINE_NOTIFY_OPTIONS?>[user_register]" value="1" <?php echo checked( 1, $this->options['user_register'], false )?>>
                             <label for="chcek_user"><?php _e('An user join.', $this->plugin_name)?></label>
+                        </td>
+                    </tr>
+
+                    <tr valign="top">
+                        <th scope="row"><?php _e('Contact Form 7:', $this->plugin_name)?></th>
+                        <td>
+                            <input type="checkbox" id="chcek_cf7" name="<?php echo SIG_LINE_NOTIFY_OPTIONS?>[wpcf7]" value="1" <?php echo checked( 1, $this->options['wpcf7'], false )?>>
+                            <label for="chcek_cf7"><?php _e('An new contact message.', $this->plugin_name)?></label><?php
+                                if(!is_plugin_active( 'contact-form-7/wp-contact-form-7.php' )) echo "&nbsp;&nbsp;<p class=\"description\">(".__('This plugin is not install or active.', $this->plugin_name).")</p>";
+                            ?>
                         </td>
                     </tr>
 
@@ -150,7 +167,6 @@ class sig_line_notify{
 
         if (empty($text)) return false;
 
-
         $request_params = array(
             "headers" => "Authorization: Bearer {$this->options['token']}",
             "body"    => array(
@@ -171,7 +187,7 @@ class sig_line_notify{
 
     function new_comments_alert( $comment_ID, $comment_approved ) {
 
-    	if( $this->options['comments'] == 1 ){
+    	if( isset($this->options['comments']) && $this->options['comments'] == 1 ){
         	$comment = get_comment( $comment_ID );
         	$message = __("You have an new comment.\n" , $this->plugin_name ) . $comment->comment_content;
     		$this->line_send( $message );
@@ -180,7 +196,7 @@ class sig_line_notify{
 
     function new_woocommerce_order_alert( $order_get_id ) {
 
-    	if( $this->options['woocommerce'] == 1 ){
+    	if( isset($this->options['woocommerce']) && $this->options['woocommerce'] == 1 ){
 
             $order = wc_get_order( $order_get_id );
             $order_data = $order->get_data();
@@ -194,8 +210,8 @@ class sig_line_notify{
 
     function new_user_register_alert( $user_id ) {
 
-        if( $this->options['user_register'] == 1 ){
-            $message = __( "An new user join." , $this->plugin_name );
+        if( isset($this->options['user_register']) && $this->options['user_register'] == 1 ){
+            $message = __( "You have an new user register." , $this->plugin_name );
 
             $user_info = get_userdata($user_id);
             $message .= __( " Username: " , $this->plugin_name ) . $user_info->user_login;
@@ -203,5 +219,13 @@ class sig_line_notify{
         }
     }
 
+
+    function new_wpcf7_message($cf7) {
+
+        $wpcf = WPCF7_ContactForm::get_current();
+
+        $message = __( "You have an new contact message." , $this->plugin_name );
+        $this->line_send( $message );
+    }
 
 }
