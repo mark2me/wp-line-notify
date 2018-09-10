@@ -4,8 +4,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WordPress LINE Notify 0.1\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/wp-line-notify\n"
-"POT-Creation-Date: 2018-09-04 17:24:07+00:00\n"
-"PO-Revision-Date: 2018-09-05 01:25+0800\n"
+"POT-Creation-Date: 2018-09-10 14:22:38+00:00\n"
+"PO-Revision-Date: 2018-09-10 22:23+0800\n"
 "Last-Translator: simon <simon@sig.tw>\n"
 "Language-Team: \n"
 "Language: zh_TW\n"
@@ -15,93 +15,125 @@ msgstr ""
 "X-Generator: Poedit 2.1.1\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-#: wp-line-notify.php:70 wp-line-notify.php:99
+#: inc/page_setup.php:11
+msgid "LINE Notify token is required!"
+msgstr "LINE Notify 權杖是必填的！"
+
+#: inc/page_setup.php:18 wp-line-notify.php:71
 msgid "Line Notify Setting"
 msgstr "Line Notify 設定"
 
-#: wp-line-notify.php:71
-msgid "Line Notify"
-msgstr "Line Notify"
-
-#: wp-line-notify.php:81
-msgid "Settings"
-msgstr "設定通知項目"
-
-#: wp-line-notify.php:94
-msgid "Send test"
-msgstr "測試通知"
-
-#: wp-line-notify.php:94
-msgid "Error on send LINE Notify."
-msgstr "LINE Notify 傳送失敗。"
-
-#: wp-line-notify.php:104
+#: inc/page_setup.php:23
 msgid "Line Notify Token:"
 msgstr "Line Notify 權杖："
 
-#: wp-line-notify.php:112
-msgid "comments:"
-msgstr "迴響："
+#: inc/page_setup.php:26
+msgid "* Generate access token on LINE website"
+msgstr "* 到 LINE Notify 網站申請存取的權杖"
 
-#: wp-line-notify.php:115
-msgid "Add new comment."
-msgstr "新增迴響時。"
+#: inc/page_setup.php:31
+msgid "When to send message ?"
+msgstr "何時傳送訊息？"
 
-#: wp-line-notify.php:120
-msgid "Woocommerce:"
+#: inc/page_setup.php:35
+msgid "Comments"
 msgstr ""
 
-#: wp-line-notify.php:123
-msgid "Add new order."
-msgstr "新增訂單時。"
+#: inc/page_setup.php:41
+msgid "Add a new comment"
+msgstr "新增一則新的迴響"
 
-#: wp-line-notify.php:125 wp-line-notify.php:143
+#: inc/page_setup.php:46
+msgid "Woocommerce"
+msgstr ""
+
+#: inc/page_setup.php:52
+msgid "Add a new order"
+msgstr "新增一筆新的訂單"
+
+#: inc/page_setup.php:54 inc/page_setup.php:78
 msgid "This plugin is not install or active."
 msgstr "這個外掛尚未安裝或是啟用。"
 
-#: wp-line-notify.php:131
-msgid "User:"
-msgstr "會員註冊："
-
-#: wp-line-notify.php:134
-msgid "An user join."
-msgstr "一位新會員加入。"
-
-#: wp-line-notify.php:139
-msgid "Contact Form 7:"
+#: inc/page_setup.php:60
+msgid "Users"
 msgstr ""
 
-#: wp-line-notify.php:142
-msgid "An new contact message."
-msgstr "一則新的聯絡訊息。"
+#: inc/page_setup.php:66
+msgid "User register"
+msgstr "註冊帳號時"
 
-#: wp-line-notify.php:152
+#: inc/page_setup.php:71
+msgid "Contact Form"
+msgstr ""
+
+#: inc/page_setup.php:77
+msgid "Add a new contact message"
+msgstr "新增一筆新的聯絡訊息"
+
+#: inc/page_setup.php:84
+msgid "New Post"
+msgstr ""
+
+#: inc/page_setup.php:87
+msgid "Select roles:"
+msgstr "選擇角色："
+
+#: inc/page_setup.php:112
 msgid "Test Line Notify"
 msgstr "測試 Line Notify"
 
-#: wp-line-notify.php:196
-msgid "You have an new comment.\n"
-msgstr "你有一則新的迴響。\n"
+#: inc/page_setup.php:119
+msgid "Test Send"
+msgstr "測試寄送"
 
-#: wp-line-notify.php:208
-msgid "You have an new order."
+#: wp-line-notify.php:72
+msgid "WP Line Notify"
+msgstr "WP Line Notify"
+
+#: wp-line-notify.php:82
+msgid "Settings"
+msgstr "設定通知項目"
+
+#: wp-line-notify.php:95
+msgid "Send test"
+msgstr "測試通知"
+
+#: wp-line-notify.php:95
+msgid "Error on send LINE Notify."
+msgstr "LINE Notify 傳送失敗。"
+
+#: wp-line-notify.php:131
+msgid "You have a new comment.\n"
+msgstr "你有一則新的迴響\n"
+
+#: wp-line-notify.php:144
+msgid "You have a new order."
 msgstr "你有一筆新的訂單。"
 
-#: wp-line-notify.php:209
+#: wp-line-notify.php:154
 msgid " total :"
 msgstr " 總額："
 
-#: wp-line-notify.php:218
-msgid "You have an new user register."
-msgstr "你有一位新會員註冊。"
+#: wp-line-notify.php:164
+msgid "You have a new user register."
+msgstr "你有一個新個帳號註冊。"
 
-#: wp-line-notify.php:221
+#: wp-line-notify.php:167
 msgid " Username: "
 msgstr " 會員名稱： "
 
-#: wp-line-notify.php:231
-msgid "You have an new contact message."
+#: wp-line-notify.php:176
+msgid "You have a new contact message."
 msgstr "你有一則新的聯絡訊息。"
+
+#: wp-line-notify.php:215
+msgid " add a pending post."
+msgstr " 新增了一篇待審核的文章。"
+
+#: wp-line-notify.php:217
+msgid " add a new post."
+msgstr " 新增新文章。"
 
 #. Plugin Name of the plugin/theme
 msgid "WordPress LINE Notify"
@@ -109,7 +141,7 @@ msgstr "WordPress LINE Notify"
 
 #. Plugin URI of the plugin/theme
 msgid "https://github.com/mark2me/wp-line-notify"
-msgstr ""
+msgstr "https://github.com/mark2me/wp-line-notify"
 
 #. Description of the plugin/theme
 msgid "This plugin can send a alert message by LINE Notify"
@@ -117,11 +149,59 @@ msgstr "利用 LINE Notify 傳送警示訊息給你"
 
 #. Author of the plugin/theme
 msgid "Simon Chuang"
-msgstr ""
+msgstr "Simon Chuang"
 
 #. Author URI of the plugin/theme
 msgid "https://github.com/mark2me"
-msgstr ""
+msgstr "https://github.com/mark2me"
+
+#~ msgid "Add new comment"
+#~ msgstr "新增一則新的迴響"
+
+#~ msgid "Add new order"
+#~ msgstr "新增一筆新的訂單"
+
+#~ msgid "An new contact message"
+#~ msgstr "新增一筆新的聯絡訊息時"
+
+#~ msgid "Comments:"
+#~ msgstr "迴響："
+
+#~ msgid "Membership:"
+#~ msgstr "成員："
+
+#~ msgid "You have an new comment.\n"
+#~ msgstr "你有一則新的迴響。\n"
+
+#~ msgid "You have an new order."
+#~ msgstr "你有一筆新的訂單。"
+
+#~ msgid "You have an new user register."
+#~ msgstr "你有一位新會員註冊。"
+
+#~ msgid "You have an new contact message."
+#~ msgstr "你有一則新的聯絡訊息。"
+
+#~ msgid "Line Notify"
+#~ msgstr "Line Notify"
+
+#~ msgid "comments:"
+#~ msgstr "迴響："
+
+#~ msgid "Add new comment."
+#~ msgstr "新增迴響時。"
+
+#~ msgid "Add new order."
+#~ msgstr "新增訂單時。"
+
+#~ msgid "User:"
+#~ msgstr "會員註冊："
+
+#~ msgid "An user join."
+#~ msgstr "一位新會員加入。"
+
+#~ msgid "An new contact message."
+#~ msgstr "一則新的聯絡訊息。"
 
 #~ msgid "An new user join."
 #~ msgstr "一位新會員加入。"
