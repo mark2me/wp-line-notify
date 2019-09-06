@@ -2,9 +2,9 @@
 Contributors: simon_tw
 Tags: plugin, line
 Requires at least: 4.0
-Tested up to: 4.9.8
+Tested up to: 5.2.2
 Requires PHP: 5.6
-Stable tag: 0.1.3
+Stable tag: 1.1
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -32,11 +32,17 @@ e.g.
 
 == Changelog ==
 
-= 0.1.3 - 2018-09-10 =
-* Add send message for new post
+= 1.1 - 2019-08-30 =
+* Add config for more Contact Form 7.
+
+= 1.0 - 2018-09-15 =
+* Add WooCommerce message template.
+
+= 0.2 - 2018-09-11 =
+* Add send message for new post.
 
 = 0.1.2 - 2018-09-07 =
-* Fixed bug
+* Fixed bug.
 
 = 0.1.1 - 2018-09-05 =
 * Added new notify for Contact Form 7

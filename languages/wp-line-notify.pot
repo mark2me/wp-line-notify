@@ -1,134 +1,192 @@
-# Copyright (C) 2018 WordPress LINE Notify
+# Copyright (C) 2019 WordPress LINE Notify
 # This file is distributed under the same license as the WordPress LINE Notify package.
 msgid ""
 msgstr ""
-"Project-Id-Version: WordPress LINE Notify 0.1.3\n"
+"Project-Id-Version: WordPress LINE Notify 1.1\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/wp-line-notify\n"
-"POT-Creation-Date: 2018-09-10 14:22:38+00:00\n"
+"POT-Creation-Date: 2019-09-04 02:20:44+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"PO-Revision-Date: 2018-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: 2019-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 
-#: inc/page_setup.php:11
+#: includes/page-setup.php:9
 msgid "LINE Notify token is required!"
 msgstr ""
 
-#: inc/page_setup.php:18 wp-line-notify.php:71
+#: includes/page-setup.php:16 wp-line-notify.php:94
 msgid "Line Notify Setting"
 msgstr ""
 
-#: inc/page_setup.php:23
+#: includes/page-setup.php:21
 msgid "Line Notify Token:"
 msgstr ""
 
-#: inc/page_setup.php:26
+#: includes/page-setup.php:26
+msgid "Access token valid"
+msgstr ""
+
+#: includes/page-setup.php:28
+msgid "Revoke token"
+msgstr ""
+
+#: includes/page-setup.php:31
+msgid "Invalid access token"
+msgstr ""
+
+#: includes/page-setup.php:33
 msgid "* Generate access token on LINE website"
 msgstr ""
 
-#: inc/page_setup.php:31
+#: includes/page-setup.php:44
 msgid "When to send message ?"
 msgstr ""
 
-#: inc/page_setup.php:35
+#: includes/page-setup.php:48
 msgid "Comments"
 msgstr ""
 
-#: inc/page_setup.php:41
+#: includes/page-setup.php:54
 msgid "Add a new comment"
 msgstr ""
 
-#: inc/page_setup.php:46
-msgid "Woocommerce"
+#: includes/page-setup.php:59
+msgid "WooCommerce"
 msgstr ""
 
-#: inc/page_setup.php:52
+#: includes/page-setup.php:65
 msgid "Add a new order"
 msgstr ""
 
-#: inc/page_setup.php:54 inc/page_setup.php:78
+#: includes/page-setup.php:67 includes/page-setup.php:125
 msgid "This plugin is not install or active."
 msgstr ""
 
-#: inc/page_setup.php:60
+#: includes/page-setup.php:70
+msgid "You can use these tags in the message template:"
+msgstr ""
+
+#: includes/page-setup.php:81
+msgid "* If you are not input it, system used default template."
+msgstr ""
+
+#: includes/page-setup.php:87
 msgid "Users"
 msgstr ""
 
-#: inc/page_setup.php:66
+#: includes/page-setup.php:93
 msgid "User register"
 msgstr ""
 
-#: inc/page_setup.php:71
+#: includes/page-setup.php:98
 msgid "Contact Form"
 msgstr ""
 
-#: inc/page_setup.php:77
+#: includes/page-setup.php:124
 msgid "Add a new contact message"
 msgstr ""
 
-#: inc/page_setup.php:84
+#: includes/page-setup.php:131
 msgid "New Post"
 msgstr ""
 
-#: inc/page_setup.php:87
+#: includes/page-setup.php:134
 msgid "Select roles:"
 msgstr ""
 
-#: inc/page_setup.php:112
+#: includes/page-setup.php:159
 msgid "Test Line Notify"
 msgstr ""
 
-#: inc/page_setup.php:119
+#: includes/page-setup.php:166
 msgid "Test Send"
 msgstr ""
 
-#: wp-line-notify.php:72
-msgid "WP Line Notify"
+#: includes/page-setup.php:174
+msgid "Are you sure to revoke notification configurations?"
 msgstr ""
 
-#: wp-line-notify.php:82
-msgid "Settings"
-msgstr ""
-
-#: wp-line-notify.php:95
-msgid "Send test"
-msgstr ""
-
-#: wp-line-notify.php:95
-msgid "Error on send LINE Notify."
-msgstr ""
-
-#: wp-line-notify.php:131
-msgid "You have a new comment.\n"
-msgstr ""
-
-#: wp-line-notify.php:144
+#: includes/woo-form-template.php:13
 msgid "You have a new order."
 msgstr ""
 
-#: wp-line-notify.php:154
-msgid " total :"
+#: includes/woo-form-template.php:14
+msgid "order name:"
 msgstr ""
 
-#: wp-line-notify.php:164
+#: includes/woo-form-template.php:15
+msgid "order item:"
+msgstr ""
+
+#: includes/woo-form-template.php:16
+msgid "payment method:"
+msgstr ""
+
+#: includes/woo-form-template.php:17
+msgid "shipping name:"
+msgstr ""
+
+#: includes/woo-form-template.php:18
+msgid "total:"
+msgstr ""
+
+#: wp-line-notify.php:95
+msgid "WP Line Notify"
+msgstr ""
+
+#: wp-line-notify.php:105
+msgid "Settings"
+msgstr ""
+
+#: wp-line-notify.php:118
+msgid "Send test ok!"
+msgstr ""
+
+#: wp-line-notify.php:118
+msgid "Error on send LINE Notify."
+msgstr ""
+
+#: wp-line-notify.php:130
+msgid "You have a new comment.\n"
+msgstr ""
+
+#: wp-line-notify.php:182
 msgid "You have a new user register."
 msgstr ""
 
-#: wp-line-notify.php:167
+#: wp-line-notify.php:185
 msgid " Username: "
 msgstr ""
 
-#: wp-line-notify.php:176
+#: wp-line-notify.php:200
 msgid "You have a new contact message."
 msgstr ""
 
-#: wp-line-notify.php:215
+#: wp-line-notify.php:203
+msgid ""
+"\n"
+" from:"
+msgstr ""
+
+#: wp-line-notify.php:207
+msgid ""
+"\n"
+" email:"
+msgstr ""
+
+#: wp-line-notify.php:211
+msgid ""
+"\n"
+" message:"
+msgstr ""
+
+#: wp-line-notify.php:255
 msgid " add a pending post."
 msgstr ""
 
-#: wp-line-notify.php:217
+#: wp-line-notify.php:257
 msgid " add a new post."
 msgstr ""
 
