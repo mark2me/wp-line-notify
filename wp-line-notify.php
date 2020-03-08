@@ -161,14 +161,19 @@ class sig_line_notify{
 
             $shipping_name = (isset($order_data['shipping']['first_name']) && isset($order_data['shipping']['last_name'])) ? ($order_data['shipping']['last_name'].$order_data['shipping']['first_name']) : '-';
 
-            $payment_method = (isset($order_data['payment_method_title'])) ?$order_data['payment_method_title'] :'-';
+            $payment_method = (isset($order_data['payment_method_title'])) ? $order_data['payment_method_title'] :'-';
+
+            $order_date = (isset($order_data['date_created'])) ? $order_data['date_created']->date('Y-m-d') :'';
+            $order_time = (isset($order_data['date_created'])) ? $order_data['date_created']->date('H:i:s') :'';
 
             $text = array(
                 '[total]' => $total,
                 '[order-product]' => $order_product,
                 '[order-name]' => $order_name,
                 '[shipping-name]' => $shipping_name,
-                '[payment-method]' => $payment_method
+                '[payment-method]' => $payment_method,
+                '[order-date]' => $order_date,
+                '[order-time]' => $order_time
             );
             $message = str_ireplace(  array_keys($text),  $text,  $message );
     		$this->line_send( $message );

@@ -68,7 +68,7 @@ if( !isset($this->options['token']) || $this->options['token'] === ''){
                     ?>
                     <hr>
                     <legend><?php _e('You can use these tags in the message template:',SIG_LINE_NOTIFY_PLUGIN_NAME)?></legend>
-                    <legend>[total] [order-product] [order-name] [shipping-name] [payment-method]</legend>
+                    <legend>[total] [order-product] [order-name] [shipping-name] [payment-method] [order-date] [order-time]</legend>
                     <textarea class="regular-text code"
                         name="<?php echo SIG_LINE_NOTIFY_OPTIONS?>[woocommerce_tpl]"
                         cols="50" rows="10"
