@@ -3,7 +3,7 @@
  * Plugin Name: WordPress LINE Notify
  * Plugin URI:  https://github.com/mark2me/wp-line-notify
  * Description: This plugin can send a alert message by LINE Notify
- * Version:     1.1
+ * Version:     1.1.1
  * Author:      Simon Chuang
  * Author URI:  https://github.com/mark2me
  * License:     GPLv2
