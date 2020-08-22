@@ -2,9 +2,9 @@
 Contributors: simon_tw
 Tags: plugin, line
 Requires at least: 4.0
-Tested up to: 5.3.2
+Tested up to: 5.5
 Requires PHP: 5.6
-Stable tag: 1.1.1
+Stable tag: 1.1.2
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -31,6 +31,9 @@ e.g.
 2. screenshot-2.png
 
 == Changelog ==
+
+= 1.1.2 - 2020-08-22 =
+* Support Contact Form 7 for V.5.2.x
 
 = 1.1.1 - 2020-03-08 =
 * Add two shortcodes for WooCommerce.

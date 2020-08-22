@@ -3,7 +3,7 @@
  * Plugin Name: WordPress LINE Notify
  * Plugin URI:  https://github.com/mark2me/wp-line-notify
  * Description: This plugin can send a alert message by LINE Notify
- * Version:     1.1.1
+ * Version:     1.1.2
  * Author:      Simon Chuang
  * Author URI:  https://github.com/mark2me
  * License:     GPLv2
@@ -194,32 +194,31 @@ class sig_line_notify{
 
     public function new_wpcf7_message($cf7) {
 
-        $submission = WPCF7_Submission::get_instance();
+        $contact_form = WPCF7_ContactForm::get_current();
+        $wpcf7_id = $contact_form -> id;
 
-        if ($submission) {
+        if( !empty($wpcf7_id) && array_key_exists( $wpcf7_id , $this->options['wpcf7']) ) {
+
+            $submission = WPCF7_Submission::get_instance();
             $posted_data = $submission->get_posted_data();
-            $wpcf7_id = ( isset($posted_data['_wpcf7']) ) ? $posted_data['_wpcf7'] : null ;
 
-            if( !empty($wpcf7_id) && array_key_exists( $wpcf7_id , $this->options['wpcf7']) ) {
+            $message = __( "You have a new contact message." , SIG_LINE_NOTIFY_PLUGIN_NAME );
 
-                $message = __( "You have a new contact message." , SIG_LINE_NOTIFY_PLUGIN_NAME );
-
-                if(isset($posted_data['your-name'])) {
-                    $message .= __( "\n from:" , SIG_LINE_NOTIFY_PLUGIN_NAME ) . $posted_data['your-name'];
-                }
-
-                if(isset($posted_data['your-email'])) {
-                    $message .= __( "\n email:" , SIG_LINE_NOTIFY_PLUGIN_NAME ) . $posted_data['your-email'];
-                }
-
-                if(isset($posted_data['your-message'])) {
-                    $message .= __( "\n message:" , SIG_LINE_NOTIFY_PLUGIN_NAME ) . $posted_data['your-message'];
-                }
-
-                $this->line_send( $message );
+            if(isset($posted_data['your-name'])) {
+                $message .= __( "\n from:" , SIG_LINE_NOTIFY_PLUGIN_NAME ) . $posted_data['your-name'];
             }
 
+            if(isset($posted_data['your-email'])) {
+                $message .= __( "\n email:" , SIG_LINE_NOTIFY_PLUGIN_NAME ) . $posted_data['your-email'];
+            }
+
+            if(isset($posted_data['your-message'])) {
+                $message .= __( "\n message:" , SIG_LINE_NOTIFY_PLUGIN_NAME ) . $posted_data['your-message'];
+            }
+
+            $this->line_send( $message );
         }
+
     }
 
     public function new_post_alert($post_id, $post, $update){
