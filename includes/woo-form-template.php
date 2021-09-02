@@ -10,12 +10,12 @@ class WP_LINE_NOTIFY_wooTemplate {
 %4$s [payment-method]
 %5$s [shipping-name]
 %6$s [total]',
-			__( 'You have a new order.', SIG_LINE_NOTIFY_PLUGIN_NAME ),
-			__( 'order name:', SIG_LINE_NOTIFY_PLUGIN_NAME),
-			__( 'order item:', SIG_LINE_NOTIFY_PLUGIN_NAME),
-			__( 'payment method:', SIG_LINE_NOTIFY_PLUGIN_NAME),
-			__( 'shipping name:', SIG_LINE_NOTIFY_PLUGIN_NAME),
-			__( 'total:', SIG_LINE_NOTIFY_PLUGIN_NAME)
+			__( 'You have a new order.' , 'wp-line-notify' ),
+			__( 'order name:' , 'wp-line-notify' ),
+			__( 'order item:' , 'wp-line-notify' ),
+			__( 'payment method:' , 'wp-line-notify' ),
+			__( 'shipping name:' , 'wp-line-notify' ),
+			__( 'total:' , 'wp-line-notify' )
         );
 
 		return trim( $template );

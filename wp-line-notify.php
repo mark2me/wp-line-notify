@@ -3,7 +3,7 @@
  * Plugin Name: WordPress LINE Notify
  * Plugin URI:  https://github.com/mark2me/wp-line-notify
  * Description: This plugin can send a alert message by LINE Notify
- * Version:     1.1.2
+ * Version:     1.2
  * Author:      Simon Chuang
  * Author URI:  https://github.com/mark2me
  * License:     GPLv2
@@ -11,14 +11,9 @@
  * Domain Path: /languages
  */
 
-define( 'SIG_LINE_NOTIFY_PLUGIN_NAME', 'wp-line-notify' );
 define( 'SIG_LINE_NOTIFY_API_URL', 'https://notify-api.line.me/api/' );
 define( 'SIG_LINE_NOTIFY_OPTIONS', '_sig_line_notify_setting' );
 define( 'SIG_LINE_NOTIFY_DIR', dirname(__FILE__) );
-
-load_plugin_textdomain( SIG_LINE_NOTIFY_PLUGIN_NAME , false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
-
-require_once SIG_LINE_NOTIFY_DIR . '/includes/woo-form-template.php';
 
 $lineNotify = new sig_line_notify();
 
@@ -40,35 +35,45 @@ class sig_line_notify{
         $this->langs = $data['langs'];
         $this->options = get_option(SIG_LINE_NOTIFY_OPTIONS);
 
+        require_once( SIG_LINE_NOTIFY_DIR . '/includes/woo-form-template.php' );
+
+        // actions
+        add_action( 'plugins_loaded' , array($this, 'load_textdomain' ) );
 
         // add menu
-        add_action( 'admin_menu', array($this,'add_option_menu') );
+        add_action( 'admin_menu' , array($this,'add_option_menu') );
 
-        add_filter("plugin_action_links_".plugin_basename(__FILE__) ,array($this, 'plugin_settings_link') );
+        // add setting
+        add_filter( 'plugin_action_links_'.plugin_basename(__FILE__) , array($this, 'plugin_settings_link') );
 
-        // add_action
-        if( isset($this->options['comments']) && $this->options['comments'] == 1 ){
-            add_action( 'comment_post' , array($this, 'new_comments_alert') , 10 ,2  );
+
+        if( isset($this->options['publish_post']) && !empty($this->options['publish_post']) ){
+            add_action( 'wp_insert_post' , array($this,'post_status_alert'), 10 , 3 );
         }
 
-        if( isset($this->options['woocommerce']) && $this->options['woocommerce'] == 1 ){
-            include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
-            if(is_plugin_active( 'woocommerce/woocommerce.php' )) {
-                add_action( 'woocommerce_checkout_update_order_meta', array($this,'new_woocommerce_order_alert') , 10, 3 );
-	        }
-	    }
+        if( isset($this->options['pending_post']) && !empty($this->options['pending_post']) ){
+            add_action( 'wp_insert_post' , array($this,'post_status_alert'), 10 , 3 );
+        }
+
+        if( isset($this->options['comments']) && $this->options['comments'] == 1 ){
+            add_action( 'comment_post' , array($this, 'new_comments_alert') , 10 , 2 );
+        }
 
 	    if( isset($this->options['user_register']) && $this->options['user_register'] == 1 ){
             add_action( 'user_register' , array($this,'new_user_register_alert') , 10 , 1 );
         }
 
+        if( isset($this->options['woocommerce']) && $this->options['woocommerce'] == 1 ){
+            require_once( ABSPATH . 'wp-admin/includes/plugin.php' );
+            if(is_plugin_active( 'woocommerce/woocommerce.php' )) {
+                add_action( 'woocommerce_checkout_update_order_meta', array($this,'new_woocommerce_order_alert') , 10, 3 );
+	        }
+	    }
+
         if( isset($this->options['wpcf7']) && is_array($this->options['wpcf7']) && count($this->options['wpcf7']) > 0 ){
             add_action("wpcf7_before_send_mail", array($this, "new_wpcf7_message"));
         }
 
-        if( isset($this->options['new_post']) && count($this->options['new_post']) > 0 ){
-            add_action('wp_insert_post',array($this,'new_post_alert'),10,3);
-        }
 
         if( isset($this->options['token']) && $this->options['token'] !== ''){
             $response = $this->line_notify_status();
@@ -89,22 +94,28 @@ class sig_line_notify{
 
     }
 
+    public function load_textdomain(){
+        load_plugin_textdomain( 'wp-line-notify' , false, dirname( plugin_basename( __FILE__ ) ) . '/languages' );
+    }
+
     public function add_option_menu(){
         add_options_page(
-            __('Line Notify Setting', SIG_LINE_NOTIFY_PLUGIN_NAME),
-            __('WP Line Notify', SIG_LINE_NOTIFY_PLUGIN_NAME),
+            __( 'Line Notify Setting' , 'wp-line-notify'),
+            __( 'WP Line Notify' , 'wp-line-notify'),
             'administrator',
-            'sig-'.SIG_LINE_NOTIFY_PLUGIN_NAME,
+            'sig-wp-line-notify',
             array($this, 'html_settings_page')
         );
 
         add_action( 'admin_init', array($this,'register_option_var') );
     }
 
-    public function plugin_settings_link($links) {
-        $settings_link = '<a href="options-general.php?page=sig-'.SIG_LINE_NOTIFY_PLUGIN_NAME.'">'.__( 'Settings', SIG_LINE_NOTIFY_PLUGIN_NAME ).'</a>';
-        array_unshift($links, $settings_link);
-        return $links;
+    public function plugin_settings_link( $actions) {
+        $settings_link = array(
+            '<a href="'. admin_url('options-general.php?page=sig-wp-line-notify'). '">'. esc_html__( 'Settings' , 'wp-line-notify' ).'</a>'
+        );
+        $actions = array_merge( $actions, $settings_link );
+        return $actions;
     }
 
     public function register_option_var() {
@@ -114,8 +125,15 @@ class sig_line_notify{
     public function html_settings_page() {
 
         if (isset($_POST['text_line_notify']) && $_POST['text_line_notify'] !=='' && check_admin_referer('test_button_clicked')) {
-            $send = $this->line_send( esc_attr($_POST['text_line_notify']) );
-            $test_send = ($send) ? '<div class="notice notice-success is-dismissible"><p>'. __( 'Send test ok!', SIG_LINE_NOTIFY_PLUGIN_NAME ) .'</p></div>' : '<div class="notice notice-error is-dismissible"><p>'. __( 'Error on send LINE Notify.',SIG_LINE_NOTIFY_PLUGIN_NAME ) .'</p></div>';
+            $rs_send = $this->line_send( esc_attr($_POST['text_line_notify']) );
+            if ( $rs_send === true ) {
+                $test_send = '<div class="notice notice-success is-dismissible"><p>'. __( 'Send test ok!' , 'wp-line-notify' ) .'</p></div>';
+            } else {
+                $test_send = sprintf('<div class="notice notice-error is-dismissible"><p>%1s Error: %2s</p></div>'
+                    , __( 'Error on send LINE Notify.' , 'wp-line-notify' ),
+                    $rs_send
+                );
+            }
         }
 
         $woo_form = new WP_LINE_NOTIFY_wooTemplate();
@@ -123,11 +141,38 @@ class sig_line_notify{
 
     }
 
+
+    public function post_status_alert($post_id, $post, $update){
+
+        $status = [
+            'publish' => __( 'publish a post' , 'wp-line-notify' ),
+            'pending' => __( 'pending a post' , 'wp-line-notify' )
+        ];
+
+        if( !isset( $status[$post->post_status] ) ) return;
+
+        if( $post->post_type !== 'post' ) return;
+
+        $user = get_userdata( $post->post_author );
+        if( is_object($user) ) {
+
+            $role = (array)$user->roles;
+            $role_name = $role[0];
+
+            if( isset($this->options[$post->post_status.'_post'][$role_name]) ){
+                $message = "{$user->display_name} {$status[$post->post_status]} {$post->post_title} {$post->guid}";
+                $this->line_send( $message );
+            }
+        }
+        return;
+
+    }
+
     public function new_comments_alert( $comment_ID, $comment_approved ) {
 
     	if( isset($this->options['comments']) && $this->options['comments'] == 1 ){
         	$comment = get_comment( $comment_ID );
-        	$message = __("You have a new comment.\n" , SIG_LINE_NOTIFY_PLUGIN_NAME ) . $comment->comment_content;
+        	$message = __( 'You have a new comment.' , 'wp-line-notify' ) . "\n" . $comment->comment_content;
     		$this->line_send( $message );
     	}
     }
@@ -184,10 +229,10 @@ class sig_line_notify{
     public function new_user_register_alert( $user_id ) {
 
         if( isset($this->options['user_register']) && $this->options['user_register'] == 1 ){
-            $message = __( "You have a new user register." , SIG_LINE_NOTIFY_PLUGIN_NAME );
+            $message = __( 'You have a new user register.' , 'wp-line-notify' );
 
             $user_info = get_userdata($user_id);
-            $message .= __( " Username: " , SIG_LINE_NOTIFY_PLUGIN_NAME ) . $user_info->user_login;
+            $message .= __( 'Username:' , 'wp-line-notify' ) . $user_info->user_login;
             $this->line_send( $message );
         }
     }
@@ -202,18 +247,18 @@ class sig_line_notify{
             $submission = WPCF7_Submission::get_instance();
             $posted_data = $submission->get_posted_data();
 
-            $message = __( "You have a new contact message." , SIG_LINE_NOTIFY_PLUGIN_NAME );
+            $message = __( 'You have a new contact message.' , 'wp-line-notify' );
 
             if(isset($posted_data['your-name'])) {
-                $message .= __( "\n from:" , SIG_LINE_NOTIFY_PLUGIN_NAME ) . $posted_data['your-name'];
+                $message .= "\n". __( 'from:' , 'wp-line-notify' ) . $posted_data['your-name'];
             }
 
             if(isset($posted_data['your-email'])) {
-                $message .= __( "\n email:" , SIG_LINE_NOTIFY_PLUGIN_NAME ) . $posted_data['your-email'];
+                $message .= "\n ". __( 'email:' , 'wp-line-notify' ) . $posted_data['your-email'];
             }
 
             if(isset($posted_data['your-message'])) {
-                $message .= __( "\n message:" , SIG_LINE_NOTIFY_PLUGIN_NAME ) . $posted_data['your-message'];
+                $message .= "\n ". __( 'message:' , 'wp-line-notify' ) . $posted_data['your-message'];
             }
 
             $this->line_send( $message );
@@ -221,57 +266,11 @@ class sig_line_notify{
 
     }
 
-    public function new_post_alert($post_id, $post, $update){
-
-
-        if ( wp_is_post_revision( $post_id ) ) return;
-
-        if( isset($this->options['new_post']) && count($this->options['new_post']) > 0 ){
-            foreach($this->options['new_post'] as $name => $sel){
-                $allow_role[] = $name;
-            }
-        }else{
-            return;
-        }
-
-        if( is_object($post) && ($post->post_status == 'publish' || $post->post_status == 'pending') ){
-
-            if($post->post_type !== 'post') return;
-
-            $post_title = $post->post_title;
-            $post_link  = $post->guid;
-            $post_type  = $post->post_type;
-            $uid        = $post->post_author;
-
-            $user = get_userdata($uid);
-
-            if(is_object($user)){
-
-                $user_name = $user->display_name;
-                $role = (array)$user->roles;
-                $role_name = $role[0];
-
-                if(in_array($role_name,$allow_role)){
-
-                    $message = $user_name;
-
-                    if( $post->post_status == 'pending' ){
-                        $message .= __( " add a pending post." , SIG_LINE_NOTIFY_PLUGIN_NAME );
-                    }else{
-                        $message .= __( " add a new post." , SIG_LINE_NOTIFY_PLUGIN_NAME );
-                    }
-
-                    $message .= " $post_title $post_link" ;
-                    $this->line_send( $message );
-                }
-            }
-        }
-
-    }
-
     private function line_send($text) {
 
-        if (empty($text)) return false;
+        if ( empty($this->options['token']) ) return __( 'LINE Notify token is required!' , 'wp-line-notify' );
+
+        if ( empty($text) ) return __( 'Plase write something !' , 'wp-line-notify' );
 
         $request_params = array(
             "headers" => "Authorization: Bearer {$this->options['token']}",
@@ -287,7 +286,7 @@ class sig_line_notify{
         if($code=='200'){
             return true;
         }else{
-            return false;
+            return $message;
         }
 
     }

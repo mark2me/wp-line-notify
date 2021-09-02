@@ -1,22 +1,46 @@
-# Copyright (C) 2019 WordPress LINE Notify
-# This file is distributed under the same license as the WordPress LINE Notify package.
+# Copyright (C) 2021 Simon Chuang
+# This file is distributed under the GPLv2.
 msgid ""
 msgstr ""
-"Project-Id-Version: WordPress LINE Notify 1.1\n"
+"Project-Id-Version: WordPress LINE Notify 1.2\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/wp-line-notify\n"
-"POT-Creation-Date: 2019-09-04 02:20:44+00:00\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"PO-Revision-Date: 2019-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
+"POT-Creation-Date: 2021-09-02T16:41:56+08:00\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"X-Generator: WP-CLI 2.5.0\n"
+"X-Domain: wp-line-notify\n"
+
+#. Plugin Name of the plugin
+msgid "WordPress LINE Notify"
+msgstr ""
+
+#. Plugin URI of the plugin
+msgid "https://github.com/mark2me/wp-line-notify"
+msgstr ""
+
+#. Description of the plugin
+msgid "This plugin can send a alert message by LINE Notify"
+msgstr ""
+
+#. Author of the plugin
+msgid "Simon Chuang"
+msgstr ""
+
+#. Author URI of the plugin
+msgid "https://github.com/mark2me"
+msgstr ""
 
 #: includes/page-setup.php:9
+#: wp-line-notify.php:271
 msgid "LINE Notify token is required!"
 msgstr ""
 
-#: includes/page-setup.php:16 wp-line-notify.php:94
+#: includes/page-setup.php:16
+#: wp-line-notify.php:103
 msgid "Line Notify Setting"
 msgstr ""
 
@@ -25,7 +49,7 @@ msgid "Line Notify Token:"
 msgstr ""
 
 #: includes/page-setup.php:26
-msgid "Access token valid"
+msgid "Access token valid."
 msgstr ""
 
 #: includes/page-setup.php:28
@@ -33,78 +57,64 @@ msgid "Revoke token"
 msgstr ""
 
 #: includes/page-setup.php:31
-msgid "Invalid access token"
+msgid "Invalid access token."
 msgstr ""
 
 #: includes/page-setup.php:33
 msgid "* Generate access token on LINE website"
 msgstr ""
 
-#: includes/page-setup.php:44
+#: includes/page-setup.php:48
 msgid "When to send message ?"
 msgstr ""
 
-#: includes/page-setup.php:48
-msgid "Comments"
-msgstr ""
-
-#: includes/page-setup.php:54
-msgid "Add a new comment"
-msgstr ""
-
-#: includes/page-setup.php:59
-msgid "WooCommerce"
-msgstr ""
-
-#: includes/page-setup.php:65
-msgid "Add a new order"
-msgstr ""
-
-#: includes/page-setup.php:67 includes/page-setup.php:125
-msgid "This plugin is not install or active."
-msgstr ""
-
-#: includes/page-setup.php:70
-msgid "You can use these tags in the message template:"
-msgstr ""
-
-#: includes/page-setup.php:81
-msgid "* If you are not input it, system used default template."
-msgstr ""
-
-#: includes/page-setup.php:87
-msgid "Users"
-msgstr ""
-
-#: includes/page-setup.php:93
-msgid "User register"
-msgstr ""
-
-#: includes/page-setup.php:98
-msgid "Contact Form"
-msgstr ""
-
-#: includes/page-setup.php:124
-msgid "Add a new contact message"
-msgstr ""
-
-#: includes/page-setup.php:131
-msgid "New Post"
-msgstr ""
-
-#: includes/page-setup.php:134
+#: includes/page-setup.php:56
+#: includes/page-setup.php:72
 msgid "Select roles:"
 msgstr ""
 
-#: includes/page-setup.php:159
+#: includes/page-setup.php:92
+msgid "Add a new comment"
+msgstr ""
+
+#: includes/page-setup.php:103
+msgid "User register"
+msgstr ""
+
+#: includes/page-setup.php:124
+msgid "Add a new order"
+msgstr ""
+
+#: includes/page-setup.php:128
+msgid "You can use these tags in the message template:"
+msgstr ""
+
+#: includes/page-setup.php:138
+msgid "* If you are not input it, system used default template."
+msgstr ""
+
+#: includes/page-setup.php:142
+#: includes/page-setup.php:177
+msgid "This plugin is not install or active."
+msgstr ""
+
+#: includes/page-setup.php:151
+msgid "Contact Form 7"
+msgstr ""
+
+#: includes/page-setup.php:175
+msgid "When a new contact message is received."
+msgstr ""
+
+#: includes/page-setup.php:194
 msgid "Test Line Notify"
 msgstr ""
 
-#: includes/page-setup.php:166
+#: includes/page-setup.php:201
 msgid "Test Send"
 msgstr ""
 
-#: includes/page-setup.php:174
+#: includes/page-setup.php:209
 msgid "Are you sure to revoke notification configurations?"
 msgstr ""
 
@@ -132,80 +142,58 @@ msgstr ""
 msgid "total:"
 msgstr ""
 
-#: wp-line-notify.php:95
+#: wp-line-notify.php:104
 msgid "WP Line Notify"
 msgstr ""
 
-#: wp-line-notify.php:105
+#: wp-line-notify.php:115
 msgid "Settings"
 msgstr ""
 
-#: wp-line-notify.php:118
+#: wp-line-notify.php:130
 msgid "Send test ok!"
 msgstr ""
 
-#: wp-line-notify.php:118
+#: wp-line-notify.php:133
 msgid "Error on send LINE Notify."
 msgstr ""
 
-#: wp-line-notify.php:130
-msgid "You have a new comment.\n"
+#: wp-line-notify.php:148
+msgid "publish a post"
 msgstr ""
 
-#: wp-line-notify.php:182
+#: wp-line-notify.php:149
+msgid "pending a post"
+msgstr ""
+
+#: wp-line-notify.php:175
+msgid "You have a new comment."
+msgstr ""
+
+#: wp-line-notify.php:232
 msgid "You have a new user register."
 msgstr ""
 
-#: wp-line-notify.php:185
-msgid " Username: "
+#: wp-line-notify.php:235
+msgid "Username:"
 msgstr ""
 
-#: wp-line-notify.php:200
+#: wp-line-notify.php:250
 msgid "You have a new contact message."
 msgstr ""
 
-#: wp-line-notify.php:203
-msgid ""
-"\n"
-" from:"
-msgstr ""
-
-#: wp-line-notify.php:207
-msgid ""
-"\n"
-" email:"
-msgstr ""
-
-#: wp-line-notify.php:211
-msgid ""
-"\n"
-" message:"
-msgstr ""
-
-#: wp-line-notify.php:255
-msgid " add a pending post."
+#: wp-line-notify.php:253
+msgid "from:"
 msgstr ""
 
 #: wp-line-notify.php:257
-msgid " add a new post."
+msgid "email:"
 msgstr ""
 
-#. Plugin Name of the plugin/theme
-msgid "WordPress LINE Notify"
+#: wp-line-notify.php:261
+msgid "message:"
 msgstr ""
 
-#. Plugin URI of the plugin/theme
-msgid "https://github.com/mark2me/wp-line-notify"
-msgstr ""
-
-#. Description of the plugin/theme
-msgid "This plugin can send a alert message by LINE Notify"
-msgstr ""
-
-#. Author of the plugin/theme
-msgid "Simon Chuang"
-msgstr ""
-
-#. Author URI of the plugin/theme
-msgid "https://github.com/mark2me"
+#: wp-line-notify.php:273
+msgid "Plase write something !"
 msgstr ""

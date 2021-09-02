@@ -2,9 +2,9 @@
 Contributors: simon_tw
 Tags: plugin, line
 Requires at least: 4.0
-Tested up to: 5.5
+Tested up to: 5.8
 Requires PHP: 5.6
-Stable tag: 1.1.2
+Stable tag: 1.2
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -31,6 +31,9 @@ e.g.
 2. screenshot-2.png
 
 == Changelog ==
+
+= 1.2 - 2021-09-02 =
+* Update something
 
 = 1.1.2 - 2020-08-22 =
 * Support Contact Form 7 for V.5.2.x
