@@ -153,22 +153,25 @@ if( !isset($this->options['token']) || $this->options['token'] === ''){
                 <td>
                 <?php if( is_plugin_active( 'contact-form-7/wp-contact-form-7.php' )) {
                     if ( post_type_exists('wpcf7_contact_form') ) {
-                        $args = array('post_type' => 'wpcf7_contact_form', 'post_per_page' => -1);
-                        $the_query = new WP_Query($args);
-                        if ($the_query->have_posts()) {
-                            while ($the_query->have_posts()) {
-                                $the_query->the_post();
-                                //$filed_name = SIG_LINE_NOTIFY_OPTIONS.'[wpcf7]['.get_the_ID().']';
+
+                        $posts = get_posts(
+                    		array(
+                    			'numberposts' => -1,
+                    			'post_type' => 'wpcf7_contact_form',
+                    			'post_status' => 'publish',
+                    		)
+                    	);
+
+                    	foreach ( $posts as $post ) {
+                        	$pid = $post->ID;
                     ?>
                             <p>
                                 <input type="checkbox" id="chcek_cf7"
-                            name="<?php echo SIG_LINE_NOTIFY_OPTIONS.'[wpcf7]['.get_the_ID().']';?>"
-                            value="1" <?php if(isset($this->options['wpcf7'][get_the_ID()])) echo checked( 1, $this->options['wpcf7'][get_the_ID()], false )?>><?php echo get_the_title();?>
+                            name="<?php echo SIG_LINE_NOTIFY_OPTIONS.'[wpcf7]['. $pid .']';?>"
+                            value="1" <?php if(isset($this->options['wpcf7'][$pid])) echo checked( 1, $this->options['wpcf7'][$pid], false )?>><?php echo $post->post_title;?>
                             </p>
-
                     <?php
-                            }
-                            wp_reset_postdata();
+
                         }
                     }
 
