@@ -37,6 +37,9 @@ class sig_line_notify{
 
         require_once( SIG_LINE_NOTIFY_DIR . '/includes/woo-form-template.php' );
 
+        if ( ! function_exists( 'is_plugin_active' ) )
+            require_once( ABSPATH . '/wp-admin/includes/plugin.php' );
+
         // actions
         add_action( 'plugins_loaded' , array($this, 'load_textdomain' ) );
 
@@ -63,15 +66,16 @@ class sig_line_notify{
             add_action( 'user_register' , array($this,'new_user_register_alert') , 10 , 1 );
         }
 
-        if( isset($this->options['woocommerce']) && $this->options['woocommerce'] == 1 ){
-            require_once( ABSPATH . 'wp-admin/includes/plugin.php' );
-            if(is_plugin_active( 'woocommerce/woocommerce.php' )) {
+        if( isset($this->options['woocommerce']) && $this->options['woocommerce'] == 1 && is_plugin_active( 'woocommerce/woocommerce.php' ) ){
                 add_action( 'woocommerce_checkout_update_order_meta', array($this,'new_woocommerce_order_alert') , 10, 3 );
-	        }
 	    }
 
-        if( isset($this->options['wpcf7']) && is_array($this->options['wpcf7']) && count($this->options['wpcf7']) > 0 ){
+        if( isset($this->options['wpcf7']) && is_array($this->options['wpcf7']) && count($this->options['wpcf7']) > 0 && is_plugin_active('contact-form-7/wp-contact-form-7.php') ){
             add_action("wpcf7_before_send_mail", array($this, "new_wpcf7_message"));
+        }
+
+        if( isset($this->options['elementor_form']) && $this->options['elementor_form'] == 1 && is_plugin_active( 'elementor/elementor.php' ) ){
+            add_action( 'elementor_pro/forms/form_submitted' , array($this,'new_elementor_form_alert') , 10 , 1 );
         }
 
 
@@ -170,72 +174,68 @@ class sig_line_notify{
 
     public function new_comments_alert( $comment_ID, $comment_approved ) {
 
-    	if( isset($this->options['comments']) && $this->options['comments'] == 1 ){
-        	$comment = get_comment( $comment_ID );
-        	$message = __( 'You have a new comment.' , 'wp-line-notify' ) . "\n" . $comment->comment_content;
-    		$this->line_send( $message );
-    	}
-    }
-
-    public function new_woocommerce_order_alert( $order_get_id ) {
-
-    	if( isset($this->options['woocommerce']) && $this->options['woocommerce'] == 1 ){
-
-            $order = wc_get_order( $order_get_id );
-            $order_data = $order->get_data();
-
-            if( isset($this->options['woocommerce_tpl']) && !empty($this->options['woocommerce_tpl']) ){
-            	$message = $this->options['woocommerce_tpl'];
-            }else{
-                $woo_form = new WP_LINE_NOTIFY_wooTemplate();
-                $message = $woo_form->form();
-            }
-
-            $total = (isset($order_data['total'])) ? $order_data['total']: '';
-
-            $order_product = '';
-            if(isset($order_data['line_items']) && count($order_data['line_items'])>0){
-                foreach($order_data['line_items'] as $item){
-                    if( isset($item['name']) && isset($item['quantity']) ){
-                        $order_product .= "\n {$item['name']} x {$item['quantity']}";
-                    }
-                }
-            }
-
-            $order_name = (isset($order_data['billing']['first_name']) && isset($order_data['billing']['last_name'])) ? ($order_data['billing']['last_name'].$order_data['billing']['first_name']) : '-';
-
-            $shipping_name = (isset($order_data['shipping']['first_name']) && isset($order_data['shipping']['last_name'])) ? ($order_data['shipping']['last_name'].$order_data['shipping']['first_name']) : '-';
-
-            $payment_method = (isset($order_data['payment_method_title'])) ? $order_data['payment_method_title'] :'-';
-
-            $order_date = (isset($order_data['date_created'])) ? $order_data['date_created']->date('Y-m-d') :'';
-            $order_time = (isset($order_data['date_created'])) ? $order_data['date_created']->date('H:i:s') :'';
-
-            $text = array(
-                '[total]' => $total,
-                '[order-product]' => $order_product,
-                '[order-name]' => $order_name,
-                '[shipping-name]' => $shipping_name,
-                '[payment-method]' => $payment_method,
-                '[order-date]' => $order_date,
-                '[order-time]' => $order_time
-            );
-            $message = str_ireplace(  array_keys($text),  $text,  $message );
-    		$this->line_send( $message );
-    	}
+    	$comment = get_comment( $comment_ID );
+    	$message = __( 'You have a new comment.' , 'wp-line-notify' ) . "\n" . $comment->comment_content;
+		$this->line_send( $message );
 
     }
 
     public function new_user_register_alert( $user_id ) {
 
-        if( isset($this->options['user_register']) && $this->options['user_register'] == 1 ){
-            $message = __( 'You have a new user register.' , 'wp-line-notify' );
+        $message = __( 'You have a new user register.' , 'wp-line-notify' );
 
-            $user_info = get_userdata($user_id);
-            $message .= __( 'Username:' , 'wp-line-notify' ) . $user_info->user_login;
-            $this->line_send( $message );
-        }
+        $user_info = get_userdata($user_id);
+        $message .= __( 'Username:' , 'wp-line-notify' ) . $user_info->user_login;
+        $this->line_send( $message );
     }
+
+    public function new_woocommerce_order_alert( $order_get_id ) {
+
+
+        $order = wc_get_order( $order_get_id );
+        $order_data = $order->get_data();
+
+        if( isset($this->options['woocommerce_tpl']) && !empty($this->options['woocommerce_tpl']) ){
+        	$message = $this->options['woocommerce_tpl'];
+        }else{
+            $woo_form = new WP_LINE_NOTIFY_wooTemplate();
+            $message = $woo_form->form();
+        }
+
+        $total = (isset($order_data['total'])) ? $order_data['total']: '';
+
+        $order_product = '';
+        if(isset($order_data['line_items']) && count($order_data['line_items'])>0){
+            foreach($order_data['line_items'] as $item){
+                if( isset($item['name']) && isset($item['quantity']) ){
+                    $order_product .= "\n {$item['name']} x {$item['quantity']}";
+                }
+            }
+        }
+
+        $order_name = (isset($order_data['billing']['first_name']) && isset($order_data['billing']['last_name'])) ? ($order_data['billing']['last_name'].$order_data['billing']['first_name']) : '-';
+
+        $shipping_name = (isset($order_data['shipping']['first_name']) && isset($order_data['shipping']['last_name'])) ? ($order_data['shipping']['last_name'].$order_data['shipping']['first_name']) : '-';
+
+        $payment_method = (isset($order_data['payment_method_title'])) ? $order_data['payment_method_title'] :'-';
+
+        $order_date = (isset($order_data['date_created'])) ? $order_data['date_created']->date('Y-m-d') :'';
+        $order_time = (isset($order_data['date_created'])) ? $order_data['date_created']->date('H:i:s') :'';
+
+        $text = array(
+            '[total]' => $total,
+            '[order-product]' => $order_product,
+            '[order-name]' => $order_name,
+            '[shipping-name]' => $shipping_name,
+            '[payment-method]' => $payment_method,
+            '[order-date]' => $order_date,
+            '[order-time]' => $order_time
+        );
+        $message = str_ireplace(  array_keys($text),  $text,  $message );
+		$this->line_send( $message );
+
+    }
+
 
     public function new_wpcf7_message($cf7) {
 
@@ -264,6 +264,14 @@ class sig_line_notify{
             $this->line_send( $message );
         }
 
+    }
+
+    public function new_elementor_form_alert($module) {
+
+        if( isset($this->options['elementor_form']) && $this->options['elementor_form'] == 1 ){
+            $message = __( 'You have a new message from elementor form.' , 'wp-line-notify' );
+            $this->line_send( $message );
+        }
     }
 
     private function line_send($text) {

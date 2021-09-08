@@ -13,7 +13,9 @@ if( !isset($this->options['token']) || $this->options['token'] === ''){
 
 ?>
 <div class="wrap">
+
     <h2><?php _e( 'Line Notify Setting' , 'wp-line-notify' )?></h2>
+
     <form method="post" action="options.php">
         <?php settings_fields('line-notify-option'); ?>
         <table class="form-table">
@@ -49,41 +51,39 @@ if( !isset($this->options['token']) || $this->options['token'] === ''){
         <table class="form-table">
 
             <tr valign="top">
-                <th scope="row" rowspan="2"><?php _e( 'Post' )?></th>
+                <th scope="row" rowspan="2"><?php _e( 'Post' , 'wp-line-notify' )?></th>
                 <td>
-                    <strong><?php _e( 'Publish' )?></strong>&nbsp;&nbsp;(
+                    <strong><?php _e( 'Publish' , 'wp-line-notify' )?></strong>&nbsp;&nbsp;(
                 <?php
                     _e( 'Select roles:' , 'wp-line-notify' );
 
                     foreach($roles as $name => $role){
                 ?>
-                    <input type="checkbox" id="publish_post_<?php echo $name?>"
+                        <input type="checkbox" id="publish_post_<?php echo $name?>"
                         name="<?php echo SIG_LINE_NOTIFY_OPTIONS."[publish_post][$name]"?>"
                         value="1" <?php if(isset($this->options['publish_post'][$name])) echo checked( 1, $this->options['publish_post'][$name], false )?>><label for="publish_post_<?php echo $name?>"><?php echo translate_user_role($role)?></label>&nbsp;&nbsp;
-
                 <?php
-                        }
+                    }
                 ?>)</td>
             </tr>
             <tr>
                 <td>
-                    <strong><?php _e( 'Pending' )?></strong>&nbsp;&nbsp;(
+                    <strong><?php _e( 'Pending' , 'wp-line-notify' )?></strong>&nbsp;&nbsp;(
                 <?php
                     _e( 'Select roles:' , 'wp-line-notify' );
 
                     foreach($roles as $name => $role){
                 ?>
-                    <input type="checkbox" id="pending_post_<?php echo $name?>"
+                        <input type="checkbox" id="pending_post_<?php echo $name?>"
                         name="<?php echo SIG_LINE_NOTIFY_OPTIONS."[pending_post][$name]"?>"
                         value="1" <?php if(isset($this->options['pending_post'][$name])) echo checked( 1, $this->options['pending_post'][$name], false )?>><label for="pending_post_<?php echo $name?>"><?php echo translate_user_role($role)?></label>&nbsp;&nbsp;
-
                 <?php
-                        }
+                    }
                 ?>)</td>
             </tr>
 
             <tr valign="top">
-                <th scope="row"><?php _e( 'Comments' )?></th>
+                <th scope="row"><?php _e( 'Comments' , 'wp-line-notify' )?></th>
                 <td>
                     <input type="checkbox" id="chcek_comment"
                         name="<?php echo SIG_LINE_NOTIFY_OPTIONS?>[comments]"
@@ -94,7 +94,7 @@ if( !isset($this->options['token']) || $this->options['token'] === ''){
             </tr>
 
             <tr valign="top">
-                <th scope="row"><?php _e( 'Users' )?></th>
+                <th scope="row"><?php _e( 'Users' , 'wp-line-notify' )?></th>
                 <td>
                     <input type="checkbox" id="chcek_user"
                         name="<?php echo SIG_LINE_NOTIFY_OPTIONS?>[user_register]"
@@ -103,27 +103,20 @@ if( !isset($this->options['token']) || $this->options['token'] === ''){
                     <label for="chcek_user"><?php _e( 'User register' , 'wp-line-notify' )?></label>
                 </td>
             </tr>
+        </table>
 
-            <tr valign="top">
-                <th scope="row"></th>
-                <td>
-                    <hr>
-                </td>
-            </tr>
-
+        <hr>
+        <table class="form-table">
             <tr valign="top">
                 <th scope="row"><?php _e( 'WooCommerce' , 'quadric' ); ?></th>
                 <td>
-                <?php
-                    if( is_plugin_active( 'woocommerce/woocommerce.php' ) ){
-                ?>
+                <?php if( is_plugin_active( 'woocommerce/woocommerce.php' ) ): ?>
                     <input type="checkbox" id="chcek_order"
                         name="<?php echo SIG_LINE_NOTIFY_OPTIONS?>[woocommerce]"
                         value="1" <?php if(isset($this->options['woocommerce'])) echo checked( 1, $this->options['woocommerce'], false )?>>
 
-                    <label for="chcek_order"><?php _e( 'Add a new order' , 'wp-line-notify' )?></label><?php
-                        include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
-                    ?>
+                    <label for="chcek_order"><?php _e( 'Add a new order' , 'wp-line-notify' )?></label>
+
                     <hr>
                     <legend><?php _e( 'You can use these tags in the message template:' , 'wp-line-notify' )?></legend>
                     <legend>[total] [order-product] [order-name] [shipping-name] [payment-method] [order-date] [order-time]</legend>
@@ -137,55 +130,69 @@ if( !isset($this->options['token']) || $this->options['token'] === ''){
                     ?></textarea>
                     <p class="description"><?php _e( '* If you are not input it, system used default template.' , 'wp-line-notify' )?></p>
 
-                <?php
-                    } else {
-                        echo '<p class="description">(' . __( 'This plugin is not install or active.' , 'wp-line-notify' ) . ')</p>';
-                    }
-                ?>
+                <?php else: ?>
+                    <p class="description">(<?php _e( 'This plugin is not install or active.' , 'wp-line-notify' )?>)</p>
+                <?php endif; ?>
                 </td>
             </tr>
 
 
             <tr valign="top">
-                <th scope="row"><?php
-                    _e( 'Contact Form 7' , 'wp-line-notify' );
-                ?></th>
+                <th scope="row"><?php _e( 'Contact Form 7' , 'wp-line-notify' ); ?></th>
                 <td>
-                <?php if( is_plugin_active( 'contact-form-7/wp-contact-form-7.php' )) {
-                    if ( post_type_exists('wpcf7_contact_form') ) {
+                <?php
+                    if( is_plugin_active( 'contact-form-7/wp-contact-form-7.php' )) {
+                        if ( post_type_exists('wpcf7_contact_form') ) {
 
-                        $posts = get_posts(
-                    		array(
-                    			'numberposts' => -1,
-                    			'post_type' => 'wpcf7_contact_form',
-                    			'post_status' => 'publish',
-                    		)
-                    	);
+                            echo '<p class="description">' .__( 'When a new contact message is received.' , 'wp-line-notify' ) .'</p>';
 
-                    	foreach ( $posts as $post ) {
-                        	$pid = $post->ID;
-                    ?>
-                            <p>
-                                <input type="checkbox" id="chcek_cf7"
-                            name="<?php echo SIG_LINE_NOTIFY_OPTIONS.'[wpcf7]['. $pid .']';?>"
-                            value="1" <?php if(isset($this->options['wpcf7'][$pid])) echo checked( 1, $this->options['wpcf7'][$pid], false )?>><?php echo $post->post_title;?>
-                            </p>
-                    <?php
+                            $posts = get_posts(
+                        		array(
+                        			'numberposts' => -1,
+                        			'post_type' => 'wpcf7_contact_form',
+                        			'post_status' => 'publish',
+                        		)
+                        	);
 
+                        	foreach ( $posts as $post ) {
+                            	$pid = $post->ID;
+                        ?>
+                                <p>
+                                    <input type="checkbox" id="chcek_cf7"
+                                name="<?php echo SIG_LINE_NOTIFY_OPTIONS.'[wpcf7]['. $pid .']';?>"
+                                value="1" <?php if(isset($this->options['wpcf7'][$pid])) echo checked( 1, $this->options['wpcf7'][$pid], false )?>><?php echo $post->post_title;?>
+                                </p>
+                        <?php
+
+                            }
                         }
+
+                    } else {
+                        echo '<p class="description">(' . __( 'This plugin is not install or active.' , 'wp-line-notify' ) . ')</p>';
                     }
-
-                    echo '<p class="description">' .__( 'When a new contact message is received.' , 'wp-line-notify' ) .'</p>';
-                } else {
-                    echo '<p class="description">(' . __( 'This plugin is not install or active.' , 'wp-line-notify' ) . ')</p>';
-                }
-
                 ?>
-
 
                 </td>
             </tr>
 
+            <tr valign="top">
+                <th scope="row"><?php _e( 'Elementor Pro' , 'wp-line-notify' ); ?></th>
+                <td>
+                <?php if( is_plugin_active( 'elementor/elementor.php' )): ?>
+                    <input type="checkbox" id="chcek_elementor_form"
+                        name="<?php echo SIG_LINE_NOTIFY_OPTIONS?>[elementor_form]"
+                        value="1" <?php if(isset($this->options['elementor_form'])) echo checked( 1, $this->options['elementor_form'], false )?>>
+
+                    <label for="chcek_elementor_form"><?php
+                        _e( 'Form widget:' , 'wp-line-notify' );
+                        _e( 'When a new contact message is received.' , 'wp-line-notify' );
+                    ?></label>
+                <?php else: ?>
+                    <p class="description">(<?php _e( 'This plugin is not install or active.' , 'wp-line-notify' )?>)</p>
+                <?php endif; ?>
+                </td>
+
+            </tr>
 
 
         </table>
