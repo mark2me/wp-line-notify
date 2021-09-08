@@ -1,5 +1,5 @@
 # Copyright (C) 2021 Simon Chuang
-# This file is distributed under the GPLv2.
+# This file is distributed under the same license as the WordPress LINE Notify plugin.
 msgid ""
 msgstr ""
 "Project-Id-Version: WordPress LINE Notify 1.2\n"
@@ -9,9 +9,9 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2021-09-02T16:41:56+08:00\n"
+"POT-Creation-Date: 2021-09-08T18:21:20+02:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"X-Generator: WP-CLI 2.5.0\n"
+"X-Generator: WP-CLI 2.4.0\n"
 "X-Domain: wp-line-notify\n"
 
 #. Plugin Name of the plugin
@@ -35,86 +35,116 @@ msgid "https://github.com/mark2me"
 msgstr ""
 
 #: includes/page-setup.php:9
-#: wp-line-notify.php:271
+#: wp-line-notify.php:279
 msgid "LINE Notify token is required!"
 msgstr ""
 
-#: includes/page-setup.php:16
-#: wp-line-notify.php:103
+#: includes/page-setup.php:17
+#: wp-line-notify.php:107
 msgid "Line Notify Setting"
 msgstr ""
 
-#: includes/page-setup.php:21
+#: includes/page-setup.php:23
 msgid "Line Notify Token:"
 msgstr ""
 
-#: includes/page-setup.php:26
+#: includes/page-setup.php:28
 msgid "Access token valid."
 msgstr ""
 
-#: includes/page-setup.php:28
+#: includes/page-setup.php:30
 msgid "Revoke token"
 msgstr ""
 
-#: includes/page-setup.php:31
+#: includes/page-setup.php:33
 msgid "Invalid access token."
 msgstr ""
 
-#: includes/page-setup.php:33
+#: includes/page-setup.php:35
 msgid "* Generate access token on LINE website"
 msgstr ""
 
-#: includes/page-setup.php:48
+#: includes/page-setup.php:50
 msgid "When to send message ?"
 msgstr ""
 
+#: includes/page-setup.php:54
+msgid "Post"
+msgstr ""
+
 #: includes/page-setup.php:56
-#: includes/page-setup.php:72
+msgid "Publish"
+msgstr ""
+
+#: includes/page-setup.php:58
+#: includes/page-setup.php:73
 msgid "Select roles:"
+msgstr ""
+
+#: includes/page-setup.php:71
+msgid "Pending"
+msgstr ""
+
+#: includes/page-setup.php:86
+msgid "Comments"
 msgstr ""
 
 #: includes/page-setup.php:92
 msgid "Add a new comment"
 msgstr ""
 
+#: includes/page-setup.php:97
+msgid "Users"
+msgstr ""
+
 #: includes/page-setup.php:103
 msgid "User register"
 msgstr ""
 
-#: includes/page-setup.php:124
+#: includes/page-setup.php:118
 msgid "Add a new order"
 msgstr ""
 
-#: includes/page-setup.php:128
+#: includes/page-setup.php:121
 msgid "You can use these tags in the message template:"
 msgstr ""
 
-#: includes/page-setup.php:138
+#: includes/page-setup.php:131
 msgid "* If you are not input it, system used default template."
 msgstr ""
 
-#: includes/page-setup.php:142
-#: includes/page-setup.php:177
+#: includes/page-setup.php:134
+#: includes/page-setup.php:171
+#: includes/page-setup.php:191
 msgid "This plugin is not install or active."
 msgstr ""
 
-#: includes/page-setup.php:151
+#: includes/page-setup.php:141
 msgid "Contact Form 7"
 msgstr ""
 
-#: includes/page-setup.php:175
+#: includes/page-setup.php:147
+#: includes/page-setup.php:188
 msgid "When a new contact message is received."
 msgstr ""
 
-#: includes/page-setup.php:194
+#: includes/page-setup.php:179
+msgid "Elementor Pro"
+msgstr ""
+
+#: includes/page-setup.php:187
+msgid "Form widget:"
+msgstr ""
+
+#: includes/page-setup.php:204
 msgid "Test Line Notify"
 msgstr ""
 
-#: includes/page-setup.php:201
+#: includes/page-setup.php:211
 msgid "Test Send"
 msgstr ""
 
-#: includes/page-setup.php:209
+#: includes/page-setup.php:219
 msgid "Are you sure to revoke notification configurations?"
 msgstr ""
 
@@ -142,39 +172,39 @@ msgstr ""
 msgid "total:"
 msgstr ""
 
-#: wp-line-notify.php:104
+#: wp-line-notify.php:108
 msgid "WP Line Notify"
 msgstr ""
 
-#: wp-line-notify.php:115
+#: wp-line-notify.php:119
 msgid "Settings"
 msgstr ""
 
-#: wp-line-notify.php:130
+#: wp-line-notify.php:134
 msgid "Send test ok!"
 msgstr ""
 
-#: wp-line-notify.php:133
+#: wp-line-notify.php:137
 msgid "Error on send LINE Notify."
 msgstr ""
 
-#: wp-line-notify.php:148
+#: wp-line-notify.php:152
 msgid "publish a post"
 msgstr ""
 
-#: wp-line-notify.php:149
+#: wp-line-notify.php:153
 msgid "pending a post"
 msgstr ""
 
-#: wp-line-notify.php:175
+#: wp-line-notify.php:178
 msgid "You have a new comment."
 msgstr ""
 
-#: wp-line-notify.php:232
+#: wp-line-notify.php:185
 msgid "You have a new user register."
 msgstr ""
 
-#: wp-line-notify.php:235
+#: wp-line-notify.php:188
 msgid "Username:"
 msgstr ""
 
@@ -194,6 +224,10 @@ msgstr ""
 msgid "message:"
 msgstr ""
 
-#: wp-line-notify.php:273
+#: wp-line-notify.php:272
+msgid "You have a new message from elementor form."
+msgstr ""
+
+#: wp-line-notify.php:281
 msgid "Plase write something !"
 msgstr ""
