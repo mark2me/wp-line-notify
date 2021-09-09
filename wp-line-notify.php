@@ -191,7 +191,6 @@ class sig_line_notify{
 
     public function new_woocommerce_order_alert( $order_get_id ) {
 
-
         $order = wc_get_order( $order_get_id );
         $order_data = $order->get_data();
 
@@ -208,7 +207,14 @@ class sig_line_notify{
         if(isset($order_data['line_items']) && count($order_data['line_items'])>0){
             foreach($order_data['line_items'] as $item){
                 if( isset($item['name']) && isset($item['quantity']) ){
-                    $order_product .= "\n {$item['name']} x {$item['quantity']}";
+                    $product = $order->get_product_from_item( $item );
+                    $sku = $product->get_sku();  // Thanks for gobido's suggestion
+                    if( !empty($sku) ){
+                        $order_product .= "\n {$item['name']} [" .  $product->get_sku() . "] x {$item['quantity']}";
+                    }else{
+                        $order_product .= "\n {$item['name']} x {$item['quantity']}";
+                    }
+
                 }
             }
         }

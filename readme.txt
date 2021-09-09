@@ -1,7 +1,7 @@
 === WP LINE Notify ===
 Contributors: simon_tw
 Tags: plugin, line
-Requires at least: 4.0
+Requires at least: 4.8
 Tested up to: 5.8
 Requires PHP: 5.6
 Stable tag: 1.2.1
@@ -9,12 +9,12 @@ License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
 This plugin can send a alert message by LINE Notify.
-(利用 LINE Notify 傳送警示訊息給你)
+(這個外掛可以藉由 LINE Notify 傳送提醒訊息給你)
 
 == Description ==
 
 This plugin can send a alert message by LINE Notify
-(利用 LINE Notify 傳送警示訊息給你)
+(這個外掛可以藉由 LINE Notify 傳送提醒訊息給你)
 
 == Installation ==
 
@@ -34,9 +34,11 @@ e.g.
 
 = 1.2.1 - 2021-09-08 =
 * Fixed bug.
+* Add Elementor form widget.
+* Add WooCommerce SKU.
 
 = 1.2 - 2021-09-02 =
-* Update something
+* Update something.
 
 = 1.1.2 - 2020-08-22 =
 * Support Contact Form 7 for V.5.2.x
