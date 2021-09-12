@@ -14,7 +14,7 @@ if( !isset($this->options['token']) || $this->options['token'] === ''){
 ?>
 <div class="wrap">
 
-    <h2><?php _e( 'Line Notify Setting' , 'wp-line-notify' )?></h2>
+    <h2><?php _e( 'Line Notify Setting' , 'wp-line-notify' )?> <span style="font-size:14px;">Ver.<?php echo $this->version?></span></h2>
 
     <form method="post" action="options.php">
         <?php settings_fields('line-notify-option'); ?>
@@ -110,29 +110,12 @@ if( !isset($this->options['token']) || $this->options['token'] === ''){
             <tr valign="top">
                 <th scope="row"><?php _e( 'WooCommerce' , 'quadric' ); ?></th>
                 <td>
-                <?php if( is_plugin_active( 'woocommerce/woocommerce.php' ) ): ?>
-                    <input type="checkbox" id="chcek_order"
-                        name="<?php echo SIG_LINE_NOTIFY_OPTIONS?>[woocommerce]"
-                        value="1" <?php if(isset($this->options['woocommerce'])) echo checked( 1, $this->options['woocommerce'], false )?>>
-
-                    <label for="chcek_order"><?php _e( 'Add a new order' , 'wp-line-notify' )?></label>
-
-                    <hr>
-                    <legend><?php _e( 'You can use these tags in the message template:' , 'wp-line-notify' )?></legend>
-                    <legend>[total] [order-product] [order-name] [shipping-name] [payment-method] [order-date] [order-time]</legend>
-                    <textarea class="regular-text code"
-                        name="<?php echo SIG_LINE_NOTIFY_OPTIONS?>[woocommerce_tpl]"
-                        cols="50" rows="10"
-                        placeholder="<?php echo $woo_form->form();?>"><?php
-                        if(isset($this->options['woocommerce_tpl']) && $this->options['woocommerce_tpl']!==''){
-                            echo esc_html( $this->options['woocommerce_tpl'] );
-                        }
-                    ?></textarea>
-                    <p class="description"><?php _e( '* If you are not input it, system used default template.' , 'wp-line-notify' )?></p>
-
-                <?php else: ?>
-                    <p class="description">(<?php _e( 'This plugin is not install or active.' , 'wp-line-notify' )?>)</p>
-                <?php endif; ?>
+                <?php
+                    if( is_plugin_active( 'woocommerce/woocommerce.php' ) ) {
+                        wpln_setup_woo_box();
+                    } else {
+                        echo '<p class="description">('. __( 'This plugin is not install or active.' , 'wp-line-notify' ) .')</p>';
+                    } ?>
                 </td>
             </tr>
 

@@ -15,7 +15,7 @@ define( 'SIG_LINE_NOTIFY_API_URL', 'https://notify-api.line.me/api/' );
 define( 'SIG_LINE_NOTIFY_OPTIONS', '_sig_line_notify_setting' );
 define( 'SIG_LINE_NOTIFY_DIR', dirname(__FILE__) );
 
-$lineNotify = new sig_line_notify();
+new sig_line_notify();
 
 class sig_line_notify{
 
@@ -35,10 +35,12 @@ class sig_line_notify{
         $this->langs = $data['langs'];
         $this->options = get_option(SIG_LINE_NOTIFY_OPTIONS);
 
-        require_once( SIG_LINE_NOTIFY_DIR . '/includes/woo-form-template.php' );
-
-        if ( ! function_exists( 'is_plugin_active' ) )
+        if ( ! function_exists( 'is_plugin_active' ) ) {
             require_once( ABSPATH . '/wp-admin/includes/plugin.php' );
+        }
+
+        require_once( SIG_LINE_NOTIFY_DIR . '/includes/class-woo.php' );
+
 
         // actions
         add_action( 'plugins_loaded' , array($this, 'load_textdomain' ) );
@@ -140,7 +142,7 @@ class sig_line_notify{
             }
         }
 
-        $woo_form = new WP_LINE_NOTIFY_wooTemplate();
+
         require_once SIG_LINE_NOTIFY_DIR . '/includes/page-setup.php';
 
     }
@@ -197,11 +199,9 @@ class sig_line_notify{
         if( isset($this->options['woocommerce_tpl']) && !empty($this->options['woocommerce_tpl']) ){
         	$message = $this->options['woocommerce_tpl'];
         }else{
-            $woo_form = new WP_LINE_NOTIFY_wooTemplate();
-            $message = $woo_form->form();
-        }
 
-        $total = (isset($order_data['total'])) ? $order_data['total']: '';
+            $message = WP_LINE_NOTIFY_WOO::form();
+        }
 
         $order_product = '';
         if(isset($order_data['line_items']) && count($order_data['line_items'])>0){
@@ -218,26 +218,32 @@ class sig_line_notify{
                 }
             }
         }
+        $payment_method = (isset($order_data['payment_method_title'])) ? $order_data['payment_method_title'] :'-';
+        $order_date = (isset($order_data['date_created'])) ? $order_data['date_created']->date('Y-m-d') :'';
+        $order_time = (isset($order_data['date_created'])) ? $order_data['date_created']->date('H:i:s') :'';
+
 
         $order_name = (isset($order_data['billing']['first_name']) && isset($order_data['billing']['last_name'])) ? ($order_data['billing']['last_name'].$order_data['billing']['first_name']) : '-';
 
         $shipping_name = (isset($order_data['shipping']['first_name']) && isset($order_data['shipping']['last_name'])) ? ($order_data['shipping']['last_name'].$order_data['shipping']['first_name']) : '-';
 
-        $payment_method = (isset($order_data['payment_method_title'])) ? $order_data['payment_method_title'] :'-';
 
-        $order_date = (isset($order_data['date_created'])) ? $order_data['date_created']->date('Y-m-d') :'';
-        $order_time = (isset($order_data['date_created'])) ? $order_data['date_created']->date('H:i:s') :'';
 
         $text = array(
-            '[total]' => $total,
+            '[total]' => (!empty($order_data['total'])) ? $order_data['total']:'--',
             '[order-product]' => $order_product,
-            '[order-name]' => $order_name,
-            '[shipping-name]' => $shipping_name,
             '[payment-method]' => $payment_method,
             '[order-date]' => $order_date,
-            '[order-time]' => $order_time
+            '[order-time]' => $order_time,
+
+            '[order-name]' => $order_name,
+            '[shipping-name]' => $shipping_name,
+
+
         );
         $message = str_ireplace(  array_keys($text),  $text,  $message );
+//        $message = print_r($order_data,true);
+        error_log( print_r($order_data,true) );
 		$this->line_send( $message );
 
     }
@@ -327,4 +333,11 @@ class sig_line_notify{
         ));
         die();
     }
+}
+
+
+function wpln_setup_woo_box(){
+
+    $options = get_option(SIG_LINE_NOTIFY_OPTIONS);
+    echo WP_LINE_NOTIFY_WOO::woo_box_html();
 }
