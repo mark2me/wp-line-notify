@@ -112,7 +112,7 @@ if( !isset($this->options['token']) || $this->options['token'] === ''){
                 <td>
                 <?php
                     if( is_plugin_active( 'woocommerce/woocommerce.php' ) ) {
-                        wpln_setup_woo_box();
+                        WP_LINE_NOTIFY_WOO::woo_box_html();
                     } else {
                         echo '<p class="description">('. __( 'This plugin is not install or active.' , 'wp-line-notify' ) .')</p>';
                     } ?>

@@ -69,7 +69,7 @@ class sig_line_notify{
         }
 
         if( isset($this->options['woocommerce']) && $this->options['woocommerce'] == 1 && is_plugin_active( 'woocommerce/woocommerce.php' ) ){
-                add_action( 'woocommerce_checkout_update_order_meta', array($this,'new_woocommerce_order_alert') , 10, 3 );
+                add_action( 'woocommerce_checkout_update_order_meta', array($this,'new_woocommerce_order_alert') , 15, 3 );
 	    }
 
         if( isset($this->options['wpcf7']) && is_array($this->options['wpcf7']) && count($this->options['wpcf7']) > 0 && is_plugin_active('contact-form-7/wp-contact-form-7.php') ){
@@ -196,6 +196,7 @@ class sig_line_notify{
         $order = wc_get_order( $order_get_id );
         $order_data = $order->get_data();
 
+
         if( isset($this->options['woocommerce_tpl']) && !empty($this->options['woocommerce_tpl']) ){
         	$message = $this->options['woocommerce_tpl'];
         }else{
@@ -203,12 +204,13 @@ class sig_line_notify{
             $message = WP_LINE_NOTIFY_WOO::form();
         }
 
+        //order
         $order_product = '';
         if(isset($order_data['line_items']) && count($order_data['line_items'])>0){
             foreach($order_data['line_items'] as $item){
                 if( isset($item['name']) && isset($item['quantity']) ){
                     $product = $order->get_product_from_item( $item );
-                    $sku = $product->get_sku();  // Thanks for gobido's suggestion
+                    $sku = $product->get_sku();
                     if( !empty($sku) ){
                         $order_product .= "\n {$item['name']} [" .  $product->get_sku() . "] x {$item['quantity']}";
                     }else{
@@ -218,32 +220,65 @@ class sig_line_notify{
                 }
             }
         }
-        $payment_method = (isset($order_data['payment_method_title'])) ? $order_data['payment_method_title'] :'-';
-        $order_date = (isset($order_data['date_created'])) ? $order_data['date_created']->date('Y-m-d') :'';
-        $order_time = (isset($order_data['date_created'])) ? $order_data['date_created']->date('H:i:s') :'';
-
 
         $order_name = (isset($order_data['billing']['first_name']) && isset($order_data['billing']['last_name'])) ? ($order_data['billing']['last_name'].$order_data['billing']['first_name']) : '-';
 
-        $shipping_name = (isset($order_data['shipping']['first_name']) && isset($order_data['shipping']['last_name'])) ? ($order_data['shipping']['last_name'].$order_data['shipping']['first_name']) : '-';
-
+        $shipping_name = (isset($order_data['shipping']['first_name']) && isset($order_data['shipping']['last_name'])) ? ($order_data['shipping']['last_name'].$order_data['shipping']['first_name']) : '';
 
 
         $text = array(
-            '[total]' => (!empty($order_data['total'])) ? $order_data['total']:'--',
-            '[order-product]' => $order_product,
-            '[payment-method]' => $payment_method,
-            '[order-date]' => $order_date,
-            '[order-time]' => $order_time,
-
-            '[order-name]' => $order_name,
-            '[shipping-name]' => $shipping_name,
-
-
+            '[order-name]'      => $order_name,
+            '[shipping-name]'   => $shipping_name,
+            '[order-product]'   => $order_product,
+            '[total]'           => (isset($order_data['total'])) ? $order_data['total'] : '',
+            '[payment-method]'  => (isset($order_data['payment_method_title'])) ? $order_data['payment_method_title'] : '',
+            '[order-time]'      => (isset($order_data['date_created'])) ? $order_data['date_created']->date('Y-m-d H:i:s') : '',
+            '[customer_note]'   => (isset($order_data['customer_note'])) ? $order_data['customer_note'] : '',
         );
+
+        // Checkout Field Editor for WooCommerce
+        if( class_exists('THWCFD_Utils') ) {
+
+            $metas = get_post_meta( $order_data['id'] );
+
+            // billing
+            foreach( WP_LINE_NOTIFY_WOO::get_fields('billing') as $tag => $v ){
+                $text["[{$tag}]"] = ( isset($metas['_'.$tag]) ) ? $metas['_'.$tag][0] : '';
+            }
+
+            // shipping
+            foreach( WP_LINE_NOTIFY_WOO::get_fields('shipping') as $tag => $v ){
+                $text["[{$tag}]"] = ( isset($metas['_'.$tag]) ) ? $metas['_'.$tag][0] : '';
+            }
+
+            // Additional Fields
+            foreach( WP_LINE_NOTIFY_WOO::get_fields('additional') as $tag => $label ){
+                if( $tag === 'order_comments' ){
+                    $text["[{$tag}]"] = ( isset($order_data['customer_note']) ) ? $order_data['customer_note']:'';
+                }else{
+                    $text["[{$tag}]"] = ( isset($metas[$tag]) ) ? $metas[$tag][0] : '';
+                }
+            }
+
+        }else{
+            // billing
+            foreach( WP_LINE_NOTIFY_WOO::init('billing') as $tag => $label ){
+                $field = str_replace('billing_' ,'' , $tag);
+                if( isset($order_data['billing'][$field]) ){
+                    $text["[{$tag}]"] = $order_data['billing'][$field];
+                }
+            }
+
+            // shipping
+            foreach( WP_LINE_NOTIFY_WOO::init('shipping') as $tag => $label ){
+                $field = str_replace('shipping_','',$tag);
+                if( isset($order_data['shipping'][$field]) ){
+                    $text["[{$tag}]"] = $order_data['shipping'][$field];
+                }
+            }
+        }
+
         $message = str_ireplace(  array_keys($text),  $text,  $message );
-//        $message = print_r($order_data,true);
-        error_log( print_r($order_data,true) );
 		$this->line_send( $message );
 
     }
@@ -333,11 +368,4 @@ class sig_line_notify{
         ));
         die();
     }
-}
-
-
-function wpln_setup_woo_box(){
-
-    $options = get_option(SIG_LINE_NOTIFY_OPTIONS);
-    echo WP_LINE_NOTIFY_WOO::woo_box_html();
 }
