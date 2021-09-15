@@ -4,7 +4,7 @@ Tags: plugin, line
 Requires at least: 4.8
 Tested up to: 5.8
 Requires PHP: 5.6
-Stable tag: 1.2.1
+Stable tag: 1.3
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -32,10 +32,11 @@ e.g.
 
 == Changelog ==
 
-= 1.2.1 - 2021-09-08 =
+= 1.3 - 2021-09-15 =
 * Fixed bug.
 * Add Elementor form widget.
-* Add WooCommerce SKU.
+* Add WooCommerce SKU field.
+* Support Checkout Field Editor (Checkout Manager).
 
 = 1.2 - 2021-09-02 =
 * Update something.

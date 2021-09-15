@@ -161,15 +161,15 @@ if( !isset($this->options['token']) || $this->options['token'] === ''){
             <tr valign="top">
                 <th scope="row"><?php _e( 'Elementor Pro' , 'wp-line-notify' ); ?></th>
                 <td>
-                <?php if( is_plugin_active( 'elementor/elementor.php' )): ?>
+                <?php if( is_plugin_active( 'elementor-pro/elementor-pro.php' )): ?>
                     <input type="checkbox" id="chcek_elementor_form"
                         name="<?php echo SIG_LINE_NOTIFY_OPTIONS?>[elementor_form]"
                         value="1" <?php if(isset($this->options['elementor_form'])) echo checked( 1, $this->options['elementor_form'], false )?>>
 
                     <label for="chcek_elementor_form"><?php
-                        _e( 'Form widget:' , 'wp-line-notify' );
-                        _e( 'When a new contact message is received.' , 'wp-line-notify' );
+                        _e( 'When a new message is received from the Elementor Pro form widget.' , 'wp-line-notify' );
                     ?></label>
+                    <p class="description">(<?php _e( 'You have to find the "Actions After Submit" in the form editing function and add a new action called "Line notify".' , 'wp-line-notify' )?>)</p>
                 <?php else: ?>
                     <p class="description">(<?php _e( 'This plugin is not install or active.' , 'wp-line-notify' )?>)</p>
                 <?php endif; ?>

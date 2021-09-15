@@ -95,7 +95,10 @@ class WP_LINE_NOTIFY_WOO {
 
         <hr>
 
-        <h4><?php _e( 'You can use these tags in the message template:' , 'wp-line-notify' )?></h4>
+        <h4><?php
+            _e( 'You can use these tags in the message template:' , 'wp-line-notify' );
+            _e( '(Click tag to insert into the template)' , 'wp-line-notify' );
+        ?></h4>
 
         <table id="table_woo">
             <tr>

@@ -1,11 +1,10 @@
 <?php
 /**
  * Plugin Name: WordPress LINE Notify
- * Plugin URI:  https://github.com/mark2me/wp-line-notify
  * Description: This plugin can send a alert message by LINE Notify
- * Version:     1.2.1
+ * Version:     1.3
  * Author:      Simon Chuang
- * Author URI:  https://github.com/mark2me
+ * Author URI:  https://github.com/mark2me/wp-line-notify
  * License:     GPLv2
  * Text Domain: wp-line-notify
  * Domain Path: /languages
@@ -76,8 +75,12 @@ class sig_line_notify{
             add_action("wpcf7_before_send_mail", array($this, "new_wpcf7_message"));
         }
 
-        if( isset($this->options['elementor_form']) && $this->options['elementor_form'] == 1 && is_plugin_active( 'elementor/elementor.php' ) ){
-            add_action( 'elementor_pro/forms/form_submitted' , array($this,'new_elementor_form_alert') , 10 , 1 );
+        if( isset($this->options['elementor_form']) && $this->options['elementor_form'] == 1 && is_plugin_active( 'elementor-pro/elementor-pro.php' ) ){
+            add_action( 'elementor_pro/init', function() {
+                require_once( SIG_LINE_NOTIFY_DIR . '/includes/class-elementor.php' );
+            	$after_submit_action = new Ele_After_Submit_Action();
+            	\ElementorPro\Plugin::instance()->modules_manager->get_modules( 'forms' )->add_form_action( $after_submit_action->get_name(), $after_submit_action );
+            });
         }
 
 
@@ -131,7 +134,7 @@ class sig_line_notify{
     public function html_settings_page() {
 
         if (isset($_POST['text_line_notify']) && $_POST['text_line_notify'] !=='' && check_admin_referer('test_button_clicked')) {
-            $rs_send = $this->line_send( esc_attr($_POST['text_line_notify']) );
+            $rs_send = $this->send_msg( esc_attr($_POST['text_line_notify']) );
             if ( $rs_send === true ) {
                 $test_send = '<div class="notice notice-success is-dismissible"><p>'. __( 'Send test ok!' , 'wp-line-notify' ) .'</p></div>';
             } else {
@@ -167,7 +170,7 @@ class sig_line_notify{
 
             if( isset($this->options[$post->post_status.'_post'][$role_name]) ){
                 $message = "{$user->display_name} {$status[$post->post_status]} {$post->post_title} {$post->guid}";
-                $this->line_send( $message );
+                $this->send_msg( $message );
             }
         }
         return;
@@ -178,7 +181,7 @@ class sig_line_notify{
 
     	$comment = get_comment( $comment_ID );
     	$message = __( 'You have a new comment.' , 'wp-line-notify' ) . "\n" . $comment->comment_content;
-		$this->line_send( $message );
+		$this->send_msg( $message );
 
     }
 
@@ -188,7 +191,7 @@ class sig_line_notify{
 
         $user_info = get_userdata($user_id);
         $message .= __( 'Username:' , 'wp-line-notify' ) . $user_info->user_login;
-        $this->line_send( $message );
+        $this->send_msg( $message );
     }
 
     public function new_woocommerce_order_alert( $order_get_id ) {
@@ -279,7 +282,7 @@ class sig_line_notify{
         }
 
         $message = str_ireplace(  array_keys($text),  $text,  $message );
-		$this->line_send( $message );
+		$this->send_msg( $message );
 
     }
 
@@ -308,20 +311,12 @@ class sig_line_notify{
                 $message .= "\n ". __( 'message:' , 'wp-line-notify' ) . $posted_data['your-message'];
             }
 
-            $this->line_send( $message );
+            $this->send_msg( $message );
         }
 
     }
 
-    public function new_elementor_form_alert($module) {
-
-        if( isset($this->options['elementor_form']) && $this->options['elementor_form'] == 1 ){
-            $message = __( 'You have a new message from elementor form.' , 'wp-line-notify' );
-            $this->line_send( $message );
-        }
-    }
-
-    private function line_send($text) {
+    public function send_msg($text) {
 
         if ( empty($this->options['token']) ) return __( 'LINE Notify token is required!' , 'wp-line-notify' );
 
