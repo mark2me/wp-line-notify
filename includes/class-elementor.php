@@ -47,9 +47,10 @@ class Ele_After_Submit_Action extends \ElementorPro\Modules\Forms\Classes\Action
 		$form_data = $record->get( 'fields' );
 
 		// Normalize the Form Data
-		$fields = [];
 		foreach ( $form_data as $id => $field ) {
-			$message .= "\n[{$id}] {$field['value']}";
+            $title = (!empty($field['title'])) ? $field['title'] : $id;
+            $valeu = (!empty($field['value'])) ? $field['value'] : '';
+			$message .= "\n[{$title}] {$valeu}";
 		}
 
         $send = new sig_line_notify();
