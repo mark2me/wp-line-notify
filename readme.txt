@@ -4,7 +4,7 @@ Tags: notify, plugin, line, WooCommerce, Elementor, Contact Form
 Requires at least: 4.8
 Tested up to: 6.0.2
 Requires PHP: 7.2
-Stable tag: 1.3.2
+Stable tag: 1.3.3
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -30,6 +30,9 @@ e.g.
 1. screenshot-1.png
 
 == Changelog ==
+
+= 1.3.3 - 2022-09-20 =
+* Use Contact Form 7 email template to send message.
 
 = 1.3.2 - 2022-09-19 =
 * Fixed some bug. (WooCommerce default template)

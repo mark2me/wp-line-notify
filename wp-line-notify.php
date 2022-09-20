@@ -2,7 +2,7 @@
 /**
  * Plugin Name: WordPress LINE Notify
  * Description: This plugin can send a alert message by LINE Notify
- * Version:     1.3.2
+ * Version:     1.3.3
  * Author:      Simon Chuang
  * Author URI:  https://github.com/mark2me/wp-line-notify
  * License:     GPLv2
@@ -298,30 +298,15 @@ class sig_line_notify{
         }
     }
 
+    public function new_wpcf7_message($contact_form) {
 
-    public function new_wpcf7_message($cf7) {
+        $wpcf7_id = $contact_form->id();
 
-        $contact_form = WPCF7_ContactForm::get_current();
-        $wpcf7_id = $contact_form -> id;
+        if( array_key_exists( $wpcf7_id, $this->options['wpcf7']) ) {
 
-        if( !empty($wpcf7_id) && array_key_exists( $wpcf7_id , $this->options['wpcf7']) ) {
-
-            $submission = WPCF7_Submission::get_instance();
-            $posted_data = $submission->get_posted_data();
-
-            $message = __( 'You have a new contact message.' , 'wp-line-notify' );
-
-            if(isset($posted_data['your-name'])) {
-                $message .= "\n". __( 'from:' , 'wp-line-notify' ) . $posted_data['your-name'];
-            }
-
-            if(isset($posted_data['your-email'])) {
-                $message .= "\n ". __( 'email:' , 'wp-line-notify' ) . $posted_data['your-email'];
-            }
-
-            if(isset($posted_data['your-message'])) {
-                $message .= "\n ". __( 'message:' , 'wp-line-notify' ) . $posted_data['your-message'];
-            }
+            $mail_body = $contact_form->prop('mail')['body'];
+            $message = __( "You have a new contact message.\n" , 'wp-line-notify' );
+            $message .= wpcf7_mail_replace_tags( $mail_body );
 
             $this->send_msg( $message );
         }

@@ -129,24 +129,19 @@ if( !isset($this->options['token']) || $this->options['token'] === ''){
 
                             echo '<p class="description">' .__( 'When a new contact message is received.' , 'wp-line-notify' ) .'</p>';
 
-                            $posts = get_posts(
-                        		array(
-                        			'numberposts' => -1,
-                        			'post_type' => 'wpcf7_contact_form',
-                        			'post_status' => 'publish',
-                        		)
-                        	);
+                            $items = WPCF7_ContactForm::find();
 
-                        	foreach ( $posts as $post ) {
-                            	$pid = $post->ID;
+                        	foreach ( $items as $item ) {
+                            	$pid = $item->id();
+                            	$title = $item-> title();
                         ?>
                                 <p>
                                     <input type="checkbox" id="chcek_cf7"
                                 name="<?php echo SIG_LINE_NOTIFY_OPTIONS.'[wpcf7]['. $pid .']';?>"
-                                value="1" <?php if(isset($this->options['wpcf7'][$pid])) echo checked( 1, $this->options['wpcf7'][$pid], false )?>><?php echo $post->post_title;?>
+                                value="1" <?php if(isset($this->options['wpcf7'][$pid])) echo checked( 1, $this->options['wpcf7'][$pid], false )?>><?php echo $title;?>
+                                    &nbsp;&nbsp;<a href="/wp-admin/admin.php?page=wpcf7&post=<?php echo $pid;?>&active-tab=1" target="_blank"><?php _e( '(Edit message template)' , 'wp-line-notify' )?></a>
                                 </p>
                         <?php
-
                             }
                         }
 

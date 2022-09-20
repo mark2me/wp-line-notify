@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2022-09-18T18:17:05+02:00\n"
+"POT-Creation-Date: 2022-09-20T11:38:57+08:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.6.0\n"
 "X-Domain: wp-line-notify\n"
@@ -225,7 +225,7 @@ msgid "* If you do not enter any text, the system will use the default template.
 msgstr ""
 
 #: includes/page-setup.php:9
-#: wp-line-notify.php:333
+#: wp-line-notify.php:318
 msgid "LINE Notify token is required!"
 msgstr ""
 
@@ -296,8 +296,8 @@ msgid "WooCommerce"
 msgstr ""
 
 #: includes/page-setup.php:117
-#: includes/page-setup.php:154
-#: includes/page-setup.php:174
+#: includes/page-setup.php:149
+#: includes/page-setup.php:169
 msgid "This plugin is not install or active."
 msgstr ""
 
@@ -309,27 +309,31 @@ msgstr ""
 msgid "When a new contact message is received."
 msgstr ""
 
-#: includes/page-setup.php:162
+#: includes/page-setup.php:142
+msgid "(Edit message template)"
+msgstr ""
+
+#: includes/page-setup.php:157
 msgid "Elementor Pro"
 msgstr ""
 
-#: includes/page-setup.php:170
+#: includes/page-setup.php:165
 msgid "When a new message is received from the Elementor Pro form widget."
 msgstr ""
 
-#: includes/page-setup.php:172
+#: includes/page-setup.php:167
 msgid "You have to find the \"Actions After Submit\" in the form editing function and add a new action called \"Line notify\"."
 msgstr ""
 
-#: includes/page-setup.php:187
+#: includes/page-setup.php:182
 msgid "Test Line Notify"
 msgstr ""
 
-#: includes/page-setup.php:194
+#: includes/page-setup.php:189
 msgid "Test Send"
 msgstr ""
 
-#: includes/page-setup.php:202
+#: includes/page-setup.php:197
 msgid "Are you sure to revoke notification configurations?"
 msgstr ""
 
@@ -373,22 +377,12 @@ msgstr ""
 msgid "There is an order id %1$d, and the state is changed to %2$s."
 msgstr ""
 
-#: wp-line-notify.php:312
-msgid "You have a new contact message."
+#: wp-line-notify.php:308
+msgid ""
+"You have a new contact message.\n"
+""
 msgstr ""
 
-#: wp-line-notify.php:315
-msgid "from:"
-msgstr ""
-
-#: wp-line-notify.php:319
-msgid "email:"
-msgstr ""
-
-#: wp-line-notify.php:323
-msgid "message:"
-msgstr ""
-
-#: wp-line-notify.php:335
+#: wp-line-notify.php:320
 msgid "Plase write something !"
 msgstr ""
