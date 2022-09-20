@@ -1,17 +1,17 @@
-# Copyright (C) 2021 Simon Chuang
+# Copyright (C) 2022 Simon Chuang
 # This file is distributed under the GPLv2.
 msgid ""
 msgstr ""
-"Project-Id-Version: WordPress LINE Notify 1.3\n"
+"Project-Id-Version: WordPress LINE Notify 1.3.2\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/wp-line-notify\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2021-09-15T12:11:23+08:00\n"
+"POT-Creation-Date: 2022-09-18T18:17:05+02:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"X-Generator: WP-CLI 2.5.0\n"
+"X-Generator: WP-CLI 2.6.0\n"
 "X-Domain: wp-line-notify\n"
 
 #. Plugin Name of the plugin
@@ -38,102 +38,199 @@ msgstr ""
 msgid "You have a message from the Elementor form."
 msgstr ""
 
-#: includes/class-elementor.php:72
+#: includes/class-elementor.php:73
 msgid "Line notify alert"
 msgstr ""
 
-#: includes/class-elementor.php:82
+#: includes/class-elementor.php:83
 msgid "Prompt text"
 msgstr ""
 
-#: includes/class-elementor.php:85
+#: includes/class-elementor.php:86
 msgid "The reminder text is displayed at the beginning of the sent message."
 msgstr ""
 
+#: includes/class-woo.php:9
+msgid "Billing First Name"
+msgstr ""
+
+#: includes/class-woo.php:10
+msgid "Billing Last Name"
+msgstr ""
+
+#: includes/class-woo.php:11
+msgid "Billing Company"
+msgstr ""
+
+#: includes/class-woo.php:12
+msgid "Billing Address 1"
+msgstr ""
+
+#: includes/class-woo.php:13
+msgid "Billing Address 2"
+msgstr ""
+
+#: includes/class-woo.php:14
+msgid "Billing City"
+msgstr ""
+
+#: includes/class-woo.php:15
+msgid "Billing State"
+msgstr ""
+
+#: includes/class-woo.php:16
+msgid "Billing Postal/Zip Code"
+msgstr ""
+
+#: includes/class-woo.php:17
+msgid "Billing Country / Region"
+msgstr ""
+
+#: includes/class-woo.php:18
+msgid "Email Address"
+msgstr ""
+
+#: includes/class-woo.php:19
+msgid "Billing Phone Number"
+msgstr ""
+
+#: includes/class-woo.php:22
+msgid "Shipping First Name"
+msgstr ""
+
+#: includes/class-woo.php:23
+msgid "Shipping Last Name"
+msgstr ""
+
+#: includes/class-woo.php:24
+msgid "Shipping Company"
+msgstr ""
+
+#: includes/class-woo.php:25
+msgid "Shipping Address 1"
+msgstr ""
+
+#: includes/class-woo.php:26
+msgid "Shipping Address 2"
+msgstr ""
+
+#: includes/class-woo.php:27
+msgid "Shipping City"
+msgstr ""
+
+#: includes/class-woo.php:28
+msgid "Shipping State"
+msgstr ""
+
+#: includes/class-woo.php:29
+msgid "Shipping Postal/Zip Code"
+msgstr ""
+
+#: includes/class-woo.php:30
+msgid "Shipping Country / Region"
+msgstr ""
+
+#: includes/class-woo.php:31
+msgid "Shipping Phone Number"
+msgstr ""
+
 #: includes/class-woo.php:34
-#: includes/class-woo.php:61
-msgid "Total"
+#: includes/class-woo.php:59
+msgid "Order id"
 msgstr ""
 
 #: includes/class-woo.php:35
-#: includes/class-woo.php:57
+#: includes/class-woo.php:60
 msgid "Order item"
 msgstr ""
 
 #: includes/class-woo.php:36
-#: includes/class-woo.php:58
+#: includes/class-woo.php:61
 msgid "Order name"
 msgstr ""
 
 #: includes/class-woo.php:37
-#: includes/class-woo.php:59
+#: includes/class-woo.php:62
 msgid "Shipping name"
 msgstr ""
 
 #: includes/class-woo.php:38
-#: includes/class-woo.php:60
+#: includes/class-woo.php:63
 msgid "Payment method"
 msgstr ""
 
 #: includes/class-woo.php:39
+#: includes/class-woo.php:64
+msgid "Total"
+msgstr ""
+
+#: includes/class-woo.php:40
 msgid "Order time"
 msgstr ""
 
-#: includes/class-woo.php:56
+#: includes/class-woo.php:41
+msgid "Order notes"
+msgstr ""
+
+#: includes/class-woo.php:58
 msgid "You have a new order."
 msgstr ""
 
-#: includes/class-woo.php:94
+#: includes/class-woo.php:96
 msgid "Add a new order"
 msgstr ""
 
 #: includes/class-woo.php:99
+msgid "Order status changed:"
+msgstr ""
+
+#: includes/class-woo.php:107
 msgid "You can use these tags in the message template:"
 msgstr ""
 
-#: includes/class-woo.php:100
+#: includes/class-woo.php:108
 msgid "(Click tag to insert into the template)"
 msgstr ""
 
-#: includes/class-woo.php:105
+#: includes/class-woo.php:113
 msgid "Default Item"
 msgstr ""
 
-#: includes/class-woo.php:116
+#: includes/class-woo.php:124
 msgid "Billing Fields"
 msgstr ""
 
-#: includes/class-woo.php:122
+#: includes/class-woo.php:130
 msgid "Shipping Fields"
 msgstr ""
 
-#: includes/class-woo.php:128
+#: includes/class-woo.php:136
 msgid "Additional Fields"
 msgstr ""
 
-#: includes/class-woo.php:137
+#: includes/class-woo.php:145
 msgid "Buyer Information"
 msgstr ""
 
-#: includes/class-woo.php:144
+#: includes/class-woo.php:152
 msgid "Recipient Information"
 msgstr ""
 
-#: includes/class-woo.php:156
+#: includes/class-woo.php:164
 msgid "Template"
 msgstr ""
 
-#: includes/class-woo.php:167
+#: includes/class-woo.php:175
 msgid "* If you do not enter any text, the system will use the default template."
 msgstr ""
 
 #: includes/page-setup.php:9
-#: wp-line-notify.php:321
+#: wp-line-notify.php:333
 msgid "LINE Notify token is required!"
 msgstr ""
 
 #: includes/page-setup.php:17
-#: wp-line-notify.php:112
+#: wp-line-notify.php:115
 msgid "Line Notify Setting"
 msgstr ""
 
@@ -194,6 +291,10 @@ msgstr ""
 msgid "User register"
 msgstr ""
 
+#: includes/page-setup.php:111
+msgid "WooCommerce"
+msgstr ""
+
 #: includes/page-setup.php:117
 #: includes/page-setup.php:154
 #: includes/page-setup.php:174
@@ -232,58 +333,62 @@ msgstr ""
 msgid "Are you sure to revoke notification configurations?"
 msgstr ""
 
-#: wp-line-notify.php:113
+#: wp-line-notify.php:116
 msgid "WP Line Notify"
 msgstr ""
 
-#: wp-line-notify.php:124
+#: wp-line-notify.php:127
 msgid "Settings"
 msgstr ""
 
-#: wp-line-notify.php:139
+#: wp-line-notify.php:142
 msgid "Send test ok!"
 msgstr ""
 
-#: wp-line-notify.php:142
+#: wp-line-notify.php:145
 msgid "Error on send LINE Notify."
 msgstr ""
 
-#: wp-line-notify.php:157
+#: wp-line-notify.php:160
 msgid "publish a post"
 msgstr ""
 
-#: wp-line-notify.php:158
+#: wp-line-notify.php:161
 msgid "pending a post"
 msgstr ""
 
-#: wp-line-notify.php:183
+#: wp-line-notify.php:186
 msgid "You have a new comment."
 msgstr ""
 
-#: wp-line-notify.php:190
+#: wp-line-notify.php:193
 msgid "You have a new user register."
 msgstr ""
 
-#: wp-line-notify.php:193
+#: wp-line-notify.php:196
 msgid "Username:"
 msgstr ""
 
-#: wp-line-notify.php:300
+#: wp-line-notify.php:295
+msgid "There is an order id %1$d, and the state is changed to %2$s."
+msgstr ""
+
+#: wp-line-notify.php:312
 msgid "You have a new contact message."
 msgstr ""
 
-#: wp-line-notify.php:303
+#: wp-line-notify.php:315
 msgid "from:"
 msgstr ""
 
-#: wp-line-notify.php:307
+#: wp-line-notify.php:319
 msgid "email:"
 msgstr ""
 
-#: wp-line-notify.php:311
+#: wp-line-notify.php:323
 msgid "message:"
 msgstr ""
 
-#: wp-line-notify.php:323
+#: wp-line-notify.php:335
 msgid "Plase write something !"
 msgstr ""

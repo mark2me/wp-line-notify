@@ -2,7 +2,7 @@
 /**
  * Plugin Name: WordPress LINE Notify
  * Description: This plugin can send a alert message by LINE Notify
- * Version:     1.3.1
+ * Version:     1.3.2
  * Author:      Simon Chuang
  * Author URI:  https://github.com/mark2me/wp-line-notify
  * License:     GPLv2
@@ -40,7 +40,6 @@ class sig_line_notify{
 
         require_once( SIG_LINE_NOTIFY_DIR . '/includes/class-woo.php' );
 
-
         // actions
         add_action( 'plugins_loaded' , array($this, 'load_textdomain' ) );
 
@@ -68,8 +67,12 @@ class sig_line_notify{
         }
 
         if( isset($this->options['woocommerce']) && $this->options['woocommerce'] == 1 && is_plugin_active( 'woocommerce/woocommerce.php' ) ){
-                add_action( 'woocommerce_checkout_update_order_meta', array($this,'new_woocommerce_order_alert') , 15, 3 );
-	    }
+                add_action( 'woocommerce_new_order', array($this,'new_woocommerce_order_alert') ,10, 2);
+        }
+
+        if( !empty($this->options['woo_status']) && is_plugin_active( 'woocommerce/woocommerce.php' ) ){
+            add_action( 'woocommerce_order_status_changed', array($this,'update_woocommerce_order_status') ,10, 4);
+        }
 
         if( isset($this->options['wpcf7']) && is_array($this->options['wpcf7']) && count($this->options['wpcf7']) > 0 && is_plugin_active('contact-form-7/wp-contact-form-7.php') ){
             add_action("wpcf7_before_send_mail", array($this, "new_wpcf7_message"));
@@ -194,20 +197,16 @@ class sig_line_notify{
         $this->send_msg( $message );
     }
 
-    public function new_woocommerce_order_alert( $order_get_id ) {
+    public function new_woocommerce_order_alert( $order_id, $order ) {
 
-        $order = wc_get_order( $order_get_id );
         $order_data = $order->get_data();
-
 
         if( isset($this->options['woocommerce_tpl']) && !empty($this->options['woocommerce_tpl']) ){
         	$message = $this->options['woocommerce_tpl'];
         }else{
-
             $message = WP_LINE_NOTIFY_WOO::form();
         }
 
-        //order
         $order_product = '';
         if(isset($order_data['line_items']) && count($order_data['line_items'])>0){
             foreach($order_data['line_items'] as $item){
@@ -215,7 +214,7 @@ class sig_line_notify{
                     $product = $order->get_product_from_item( $item );
                     $sku = $product->get_sku();
                     if( !empty($sku) ){
-                        $order_product .= "\n {$item['name']} [" .  $product->get_sku() . "] x {$item['quantity']}";
+                        $order_product .= "\n {$item['name']} [" . $product->get_sku() . "] x {$item['quantity']}";
                     }else{
                         $order_product .= "\n {$item['name']} x {$item['quantity']}";
                     }
@@ -228,13 +227,13 @@ class sig_line_notify{
 
         $shipping_name = (isset($order_data['shipping']['first_name']) && isset($order_data['shipping']['last_name'])) ? ($order_data['shipping']['last_name'].$order_data['shipping']['first_name']) : '';
 
-
         $text = array(
+            '[order-id]'        => $order_id,
+            '[order-product]'   => $order_product,
             '[order-name]'      => $order_name,
             '[shipping-name]'   => $shipping_name,
-            '[order-product]'   => $order_product,
-            '[total]'           => (isset($order_data['total'])) ? $order_data['total'] : '',
             '[payment-method]'  => (isset($order_data['payment_method_title'])) ? $order_data['payment_method_title'] : '',
+            '[total]'           => (isset($order_data['total'])) ? $order_data['total'] : '',
             '[order-time]'      => (isset($order_data['date_created'])) ? $order_data['date_created']->date('Y-m-d H:i:s') : '',
             '[customer_note]'   => (isset($order_data['customer_note'])) ? $order_data['customer_note'] : '',
         );
@@ -284,6 +283,19 @@ class sig_line_notify{
         $message = str_ireplace(  array_keys($text),  $text,  $message );
 		$this->send_msg( $message );
 
+    }
+
+    public function update_woocommerce_order_status($order_id, $old_status, $new_status, $order) {
+
+        $options = get_option(SIG_LINE_NOTIFY_OPTIONS);
+        if( !empty($options['woo_status']) ) {
+            $my_status = (!empty($options['woo_status']));
+            if( in_array( 'wc-'.$new_status, $options['woo_status'] ) ){
+
+                $message = sprintf( __('There is an order id %1$d, and the state is changed to %2$s.', 'wp-line-notify'), $order_id, wc_get_order_status_name($new_status) );
+                $this->send_msg( $message );
+            }
+        }
     }
 
 

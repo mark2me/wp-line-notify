@@ -1,10 +1,10 @@
 === WP LINE Notify ===
 Contributors: simon_tw
-Tags: plugin, line
+Tags: notify, plugin, line, WooCommerce, Elementor, Contact Form
 Requires at least: 4.8
-Tested up to: 5.8
-Requires PHP: 5.6
-Stable tag: 1.3.1
+Tested up to: 6.0.2
+Requires PHP: 7.2
+Stable tag: 1.3.2
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -28,9 +28,16 @@ e.g.
 == Screenshots ==
 
 1. screenshot-1.png
-2. screenshot-2.png
 
 == Changelog ==
+
+= 1.3.2 - 2022-09-19 =
+* Fixed some bug. (WooCommerce default template)
+* Add Order status changed notify.
+
+= 1.3.1 - 2021-10-21 =
+* Fixed bug.
+* Update Elementor form show text.
 
 = 1.3 - 2021-09-15 =
 * Fixed bug.

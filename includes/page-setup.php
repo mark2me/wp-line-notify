@@ -108,7 +108,7 @@ if( !isset($this->options['token']) || $this->options['token'] === ''){
         <hr>
         <table class="form-table">
             <tr valign="top">
-                <th scope="row"><?php _e( 'WooCommerce' , 'quadric' ); ?></th>
+                <th scope="row"><?php _e( 'WooCommerce' , 'wp-line-notify' ); ?></th>
                 <td>
                 <?php
                     if( is_plugin_active( 'woocommerce/woocommerce.php' ) ) {

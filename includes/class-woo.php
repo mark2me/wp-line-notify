@@ -6,38 +6,39 @@ class WP_LINE_NOTIFY_WOO {
 
 		$fields = array(
     		'billing' => array(
-    			'billing_first_name' => __( 'Billing First Name', 'woocommerce' ),
-    			'billing_last_name'  => __( 'Billing Last Name', 'woocommerce' ),
-    			'billing_company'    => __( 'Billing Company', 'woocommerce' ),
-    			'billing_address_1'  => __( 'Billing Address 1', 'woocommerce' ),
-    			'billing_address_2'  => __( 'Billing Address 2', 'woocommerce' ),
-    			'billing_city'       => __( 'Billing City', 'woocommerce' ),
-    			'billing_state'      => __( 'Billing State', 'woocommerce' ),
-    			'billing_postcode'   => __( 'Billing Postal/Zip Code', 'woocommerce' ),
-    			'billing_country'    => __( 'Billing Country / Region', 'woocommerce' ),
-    			'billing_email'      => __( 'Email Address', 'woocommerce' ),
-    			'billing_phone'      => __( 'Billing Phone Number', 'woocommerce' ),
+    			'billing_first_name' => __( 'Billing First Name', 'wp-line-notify' ),
+    			'billing_last_name'  => __( 'Billing Last Name', 'wp-line-notify' ),
+    			'billing_company'    => __( 'Billing Company', 'wp-line-notify' ),
+    			'billing_address_1'  => __( 'Billing Address 1', 'wp-line-notify' ),
+    			'billing_address_2'  => __( 'Billing Address 2', 'wp-line-notify' ),
+    			'billing_city'       => __( 'Billing City', 'wp-line-notify' ),
+    			'billing_state'      => __( 'Billing State', 'wp-line-notify' ),
+    			'billing_postcode'   => __( 'Billing Postal/Zip Code', 'wp-line-notify' ),
+    			'billing_country'    => __( 'Billing Country / Region', 'wp-line-notify' ),
+    			'billing_email'      => __( 'Email Address', 'wp-line-notify' ),
+    			'billing_phone'      => __( 'Billing Phone Number', 'wp-line-notify' ),
             ),
             'shipping' => array(
-    			'shipping_first_name'=> __( 'Shipping First Name', 'woocommerce' ),
-    			'shipping_last_name' => __( 'Shipping Last Name', 'woocommerce' ),
-    			'shipping_company'   => __( 'Shipping Company', 'woocommerce' ),
-    			'shipping_address_1' => __( 'Shipping Address 1', 'woocommerce' ),
-    			'shipping_address_2' => __( 'Shipping Address 2', 'woocommerce' ),
-    			'shipping_city'      => __( 'Shipping City', 'woocommerce' ),
-    			'shipping_state'     => __( 'Shipping State', 'woocommerce' ),
-    			'shipping_postcode'  => __( 'Shipping Postal/Zip Code', 'woocommerce' ),
-    			'shipping_country'   => __( 'Shipping Country / Region', 'woocommerce' ),
-    			'shipping_phone'     => __( 'Shipping Phone Number', 'woocommerce' ),
+    			'shipping_first_name'=> __( 'Shipping First Name', 'wp-line-notify' ),
+    			'shipping_last_name' => __( 'Shipping Last Name', 'wp-line-notify' ),
+    			'shipping_company'   => __( 'Shipping Company', 'wp-line-notify' ),
+    			'shipping_address_1' => __( 'Shipping Address 1', 'wp-line-notify' ),
+    			'shipping_address_2' => __( 'Shipping Address 2', 'wp-line-notify' ),
+    			'shipping_city'      => __( 'Shipping City', 'wp-line-notify' ),
+    			'shipping_state'     => __( 'Shipping State', 'wp-line-notify' ),
+    			'shipping_postcode'  => __( 'Shipping Postal/Zip Code', 'wp-line-notify' ),
+    			'shipping_country'   => __( 'Shipping Country / Region', 'wp-line-notify' ),
+    			'shipping_phone'     => __( 'Shipping Phone Number', 'wp-line-notify' ),
             ),
             'order' => array(
-                'total'             => __( 'Total' , 'wp-line-notify' ),
+                'order-id'          => __( 'Order id' , 'wp-line-notify' ),
                 'order-product'     => __( 'Order item' , 'wp-line-notify' ),
                 'order-name'        => __( 'Order name' , 'wp-line-notify' ),
                 'shipping-name'     => __( 'Shipping name' , 'wp-line-notify' ),
                 'payment-method'    => __( 'Payment method' , 'wp-line-notify' ),
+                'total'             => __( 'Total' , 'wp-line-notify' ),
                 'order-time'        => __( 'Order time' , 'wp-line-notify' ),
-                'customer_note'     => __( 'Order notes', 'woocommerce' ),
+                'customer_note'     => __( 'Order notes', 'wp-line-notify' ),
             )
 		);
 
@@ -48,20 +49,22 @@ class WP_LINE_NOTIFY_WOO {
     public static function form() {
         $template = sprintf(
 '%1$s
-%2$s: [order-name]
+%2$s: [order-id]
 %3$s: [order-product]
-%4$s: [payment-method]
+%4$s: [order-name]
 %5$s: [shipping-name]
-%6$s: [total]',
-			__( 'You have a new order.' , 'wp-line-notify' ),
-			__( 'Order item' , 'wp-line-notify' ),
-			__( 'Order name' , 'wp-line-notify' ),
-			__( 'Shipping name' , 'wp-line-notify' ),
-			__( 'Payment method' , 'wp-line-notify' ),
-			__( 'Total' , 'wp-line-notify' ),
+%6$s: [payment-method]
+%7$s: [total]',
+                __( 'You have a new order.' , 'wp-line-notify' ),
+                __( 'Order id' , 'wp-line-notify' ),
+                __( 'Order item' , 'wp-line-notify' ),
+                __( 'Order name' , 'wp-line-notify' ),
+                __( 'Shipping name' , 'wp-line-notify' ),
+                __( 'Payment method' , 'wp-line-notify' ),
+                __( 'Total' , 'wp-line-notify' )
         );
 
-		return trim( $template );
+        return trim( $template );
     }
 
     /*
@@ -73,7 +76,7 @@ class WP_LINE_NOTIFY_WOO {
         if( class_exists('THWCFD_Utils') ){
             $fields = THWCFD_Utils::get_fields($type);
         }
-		return $fields;
+        return $fields;
     }
 
     private static function  fields_tags_list($type='') {
@@ -87,12 +90,17 @@ class WP_LINE_NOTIFY_WOO {
     public static function woo_box_html() {
 
         $options = get_option(SIG_LINE_NOTIFY_OPTIONS);
-
+        $my_status = (!empty($options['woo_status'])) ? $options['woo_status']:[];
 ?>
         <input type="checkbox" id="chcek_order" name="<?php echo SIG_LINE_NOTIFY_OPTIONS?>[woocommerce]" value="1" <?php if(isset($options['woocommerce'])) echo checked( 1, $options['woocommerce'], false )?>>
+        <label for="chcek_order"><?php _e( 'Add a new order' , 'wp-line-notify' )?></label><br>
+        <hr>
 
-        <label for="chcek_order"><?php _e( 'Add a new order' , 'wp-line-notify' )?></label>
-
+        <?php _e( 'Order status changed:' , 'wp-line-notify' )?>
+        <?php foreach(wc_get_order_statuses() as $type=>$name): ?>
+            &nbsp;&nbsp;&nbsp;<input type="checkbox" id="chcek_order_<?php echo $type?>" name="<?php echo SIG_LINE_NOTIFY_OPTIONS?>[woo_status][]" value="<?php echo $type?>" <?php if( in_array($type,$my_status) ) echo 'checked="checked"';?>>
+            <label for="chcek_order_<?php echo $type?>"><?php echo $name?></label>
+        <?php endforeach;?>
         <hr>
 
         <h4><?php
