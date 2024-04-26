@@ -1,6 +1,6 @@
 <?php
 
-class WP_LINE_NOTIFY_WOO {
+class sig_line_notify_woo {
 
     public static function init($type='order') {
 
@@ -54,14 +54,18 @@ class WP_LINE_NOTIFY_WOO {
 %4$s: [order-name]
 %5$s: [shipping-name]
 %6$s: [payment-method]
-%7$s: [total]',
+%7$s: [total]
+%8$s: [order-time]
+%9$s: [customer_note]',
                 __( 'You have a new order.' , 'wp-line-notify' ),
                 __( 'Order id' , 'wp-line-notify' ),
                 __( 'Order item' , 'wp-line-notify' ),
                 __( 'Order name' , 'wp-line-notify' ),
                 __( 'Shipping name' , 'wp-line-notify' ),
                 __( 'Payment method' , 'wp-line-notify' ),
-                __( 'Total' , 'wp-line-notify' )
+                __( 'Total' , 'wp-line-notify' ),
+                __( 'Order time' , 'wp-line-notify' ),
+                __( 'Order notes', 'wp-line-notify' )
         );
 
         return trim( $template );
@@ -87,109 +91,109 @@ class WP_LINE_NOTIFY_WOO {
     }
 
 
-    public static function woo_box_html() {
+    public static function woo_box_html($option_name='') {
 
-        $options = get_option(SIG_LINE_NOTIFY_OPTIONS);
-        $my_status = (!empty($options['woo_status'])) ? $options['woo_status']:[];
+        if( !is_plugin_active( 'woocommerce/woocommerce.php' ) ) {
+            echo '<table class="form-table"><tr valign="top">';
+            echo '<th scope="row">'. __( 'WooCommerce' , 'wp-line-notify' ) .'</th>';
+            echo '<td><p class="description">('. __( 'This plugin is not install or active.' , 'wp-line-notify' ) .')</p></td>';
+            echo '</tr></table>';
+            return;
+        }
+
+        $options = get_option($option_name);
+        $my_status = ( !empty($options['woo_status']) ) ? $options['woo_status']:[];
 ?>
-        <input type="checkbox" id="chcek_order" name="<?php echo SIG_LINE_NOTIFY_OPTIONS?>[woocommerce]" value="1" <?php if(isset($options['woocommerce'])) echo checked( 1, $options['woocommerce'], false )?>>
-        <label for="chcek_order"><?php _e( 'Add a new order' , 'wp-line-notify' )?></label><br>
-        <hr>
+        <table class="form-table">
+        <tr valign="top">
+            <th scope="row"><?php _e( 'WooCommerce' , 'wp-line-notify' ); ?></th>
+            <td>
+                <input type="checkbox" id="chcek_order" name="<?php echo $option_name?>[woo_order]" value="yes" <?php if(isset($options['woo_order'])) echo checked( 'yes', $options['woo_order'], false )?>>
+                <label for="chcek_order"><?php _e( 'Add a new order' , 'wp-line-notify' )?></label><br>
+            </td>
+        </tr>
+        <tr valign="top">
+            <th scope="row">&nbsp;</th>
+            <td><?php
+                    _e( 'You can use these tags in the message template:' , 'wp-line-notify' );
+                    _e( '(Click tag to insert into the template)' , 'wp-line-notify' );
+            ?>
+                <table id="table_woo">
+                <tr>
+                    <td><?php _e('Default Item','wp-line-notify')?></td>
+                    <td colspan="2"><?php
+                        foreach( self::init('order') as $tag => $label ){
+                            echo '<a href="javascript:;" class="woo_item_tag" data-id="'.$tag.'" data-label="'.$label.'" title="'. $tag .'">'.$label.'</a>';
+                        }
+                    ?></td>
+                </tr>
 
-        <?php _e( 'Order status changed:' , 'wp-line-notify' )?>
-        <?php foreach(wc_get_order_statuses() as $type=>$name): ?>
-            &nbsp;&nbsp;&nbsp;<input type="checkbox" id="chcek_order_<?php echo $type?>" name="<?php echo SIG_LINE_NOTIFY_OPTIONS?>[woo_status][]" value="<?php echo $type?>" <?php if( in_array($type,$my_status) ) echo 'checked="checked"';?>>
-            <label for="chcek_order_<?php echo $type?>"><?php echo $name?></label>
-        <?php endforeach;?>
-        <hr>
+                <?php if( class_exists('THWCFD_Utils') ): ?>
+                <tr>
+                    <td><?php _e('Billing Fields','wp-line-notify')?></td>
+                    <td colspan="2"><?php
+                        self::fields_tags_list('billing');
+                    ?></td>
+                </tr>
+                <tr>
+                    <td><?php _e('Shipping Fields','wp-line-notify')?></td>
+                    <td colspan="2"><?php
+                        self::fields_tags_list('shipping');
+                    ?></td>
+                </tr>
+                <tr>
+                    <td><?php _e('Additional Fields','wp-line-notify')?></td>
+                    <td colspan="2"><?php
+                        self::fields_tags_list('additional');
+                    ?></td>
+                </tr>
 
-        <h4><?php
-            _e( 'You can use these tags in the message template:' , 'wp-line-notify' );
-            _e( '(Click tag to insert into the template)' , 'wp-line-notify' );
-        ?></h4>
+                <?php else: ?>
 
-        <table id="table_woo">
-            <tr>
-                <td><?php _e('Default Item','wp-line-notify')?></td>
-                <td colspan="2"><?php
-                    foreach( self::init('order') as $tag => $label ){
-                        echo '<a href="javascript:;" class="woo_item_tag" data-id="'.$tag.'" data-label="'.$label.'" title="'. $tag .'">'.$label.'</a>';
-                    }
-                ?></td>
-            </tr>
+                <tr>
+                    <td><?php _e('Buyer Information','wp-line-notify')?></td>
+                    <td colspan="2"><?php
+                        foreach( self::init('billing') as $tag => $label ){
+                            echo '<a href="javascript:;" class="woo_item_tag" data-id="'.$tag.'" data-label="'.$label.'" title="'. $tag .'">'.$label.'</a>';
+                        }?></td>
+                </tr>
+                <tr>
+                    <td><?php _e('Recipient Information','wp-line-notify')?></td>
+                    <td colspan="2"><?php
+                        foreach( self::init('shipping') as $tag => $label ){
+                            echo '<a href="javascript:;" class="woo_item_tag" data-id="'.$tag.'" data-label="'.$label.'" title="'. $tag .'">'.$label.'</a>';
+                        }?></td>
+                </tr>
 
-            <?php if( class_exists('THWCFD_Utils') ): ?>
+                <?php endif; ?>
 
-            <tr>
-                <td><?php _e('Billing Fields','wp-line-notify')?></td>
-                <td colspan="2"><?php
-                    self::fields_tags_list('billing');
-                ?></td>
-            </tr>
-            <tr>
-                <td><?php _e('Shipping Fields','wp-line-notify')?></td>
-                <td colspan="2"><?php
-                    self::fields_tags_list('shipping');
-                ?></td>
-            </tr>
-            <tr>
-                <td><?php _e('Additional Fields','wp-line-notify')?></td>
-                <td colspan="2"><?php
-                    self::fields_tags_list('additional');
-                ?></td>
-            </tr>
+                <tr><td colspan="3"><hr></td></tr>
 
-            <?php else: ?>
+                <tr>
+                    <td><?php _e('Template','wp-line-notify')?></td>
+                    <td width="400">
+                        <textarea id="woo_msg_textarea" class="regular-text code" name="<?php echo $option_name?>[woo_tpl]" style="width: 100%;height: 300px;"><?php if( !empty($options['woo_tpl']) ) echo esc_html( $options['woo_tpl'] );?></textarea>
 
-            <tr>
-                <td><?php _e('Buyer Information','wp-line-notify')?></td>
-                <td colspan="2"><?php
-                    foreach( self::init('billing') as $tag => $label ){
-                        echo '<a href="javascript:;" class="woo_item_tag" data-id="'.$tag.'" data-label="'.$label.'" title="'. $tag .'">'.$label.'</a>';
-                    }?></td>
-            </tr>
-            <tr>
-                <td><?php _e('Recipient Information','wp-line-notify')?></td>
-                <td colspan="2"><?php
-                    foreach( self::init('shipping') as $tag => $label ){
-                        echo '<a href="javascript:;" class="woo_item_tag" data-id="'.$tag.'" data-label="'.$label.'" title="'. $tag .'">'.$label.'</a>';
-                    }?></td>
-            </tr>
-
-            <?php endif; ?>
-
-            <tr><td colspan="3"><hr></td></tr>
-
-            <tr>
-                <td><?php _e('Template','wp-line-notify')?></td>
-                <td width="400">
-                    <textarea id="woo_msg_textarea" class="regular-text code" name="<?php echo SIG_LINE_NOTIFY_OPTIONS?>[woocommerce_tpl]" style="width: 100%;height: 300px;"><?php
-
-                if(isset($options['woocommerce_tpl']) && $options['woocommerce_tpl']!==''){
-                    echo esc_html( $options['woocommerce_tpl'] );
-                }
-
-            ?></textarea>
-
-                </td>
-                <td style="vertical-align:top"><p class="description"><?php _e( '* If you do not enter any text, the system will use the default template.' , 'wp-line-notify' )?></p><code><?php echo nl2br(WP_LINE_NOTIFY_WOO::form());?></code></td>
-            </tr>
+                    </td>
+                    <td style="vertical-align:top"><p class="description"><?php _e( '* If you do not enter any text, the system will use the default template.' , 'wp-line-notify' )?></p><code><?php echo nl2br(sig_line_notify_woo::form());?></code></td>
+                </tr>
+                </table>
+            </td>
+        </tr>
+        <tr valign="top">
+            <th scope="row"><?php _e( 'Order status changed' , 'wp-line-notify' )?></th>
+            <td>
+            <?php foreach(wc_get_order_statuses() as $type=>$name): ?>
+                <input type="checkbox" id="chcek_order_<?php echo $type?>" name="<?php echo $option_name?>[woo_status][]" value="<?php echo esc_attr( $type ); ?>" <?php if( in_array($type,$my_status) ) echo 'checked="checked"';?>>
+                <label for="chcek_order_<?php echo $type?>"><?php echo $name?></label>&nbsp;&nbsp;&nbsp;
+            <?php endforeach;?>
+            </td>
+        </tr>
         </table>
 
-
-
         <style type="text/css">
-        #table_woo td{ padding: 5px 10px}
-        .woo_item_tag{
-            display: inline-block;
-            color: #333;
-            background-color: rgba(0,0,0,0.07);
-            margin:10px 10px 0 0;
-            padding: 3px 10px;
-            border-radius: 5px;
-            -moz-border-radius: 5px;
-            -webkit-border-radius: 5px;
-        }
+        #table_woo td{ padding: 5px 10px;}
+        .woo_item_tag{ display: inline-block; color:#333; background-color: rgba(0,0,0,0.07); margin:10px 10px 0 0; padding: 3px 10px; border-radius: 5px; -moz-border-radius: 5px; -webkit-border-radius: 5px; }
         </style>
 
         <script>
@@ -203,7 +207,6 @@ class WP_LINE_NOTIFY_WOO {
                 $area.val(content.substring(0, start) + sel_name + content.substring(start));
                 $area.focus();
                 $area[0].selectionStart = $area[0].selectionEnd = start + sel_name.length;
-
             });
         });
         </script>

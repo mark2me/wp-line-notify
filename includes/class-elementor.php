@@ -1,10 +1,21 @@
 <?php
-/*
-    For Elementor Pro
-    https://developers.elementor.com/forms-api/custom-form-action/
-*/
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly.
+}
+/**
+ *    For Elementor Pro
+ *   https://developers.elementor.com/forms-api/custom-form-action/
+ */
 
-class Ele_After_Submit_Action extends \ElementorPro\Modules\Forms\Classes\Action_Base {
+class Line_Notify_After_Submit_Action extends \ElementorPro\Modules\Forms\Classes\Action_Base {
+
+    private $token;
+
+    public function __construct( $token = [] ) {
+
+        $this->token = $token;
+	}
+
 	/**
 	 * Get Name
 	 *
@@ -40,21 +51,23 @@ class Ele_After_Submit_Action extends \ElementorPro\Modules\Forms\Classes\Action
 	 */
 	public function run( $record, $ajax_handler ) {
 
-		$settings = $record->get( 'form_settings' );
+        if( !empty($this->token) ){
+    		$settings = $record->get( 'form_settings' );
 
-		$message = ( !empty( $settings['line_notify_prompt_text'] ) ) ? $settings['line_notify_prompt_text'] : __( 'You have a message from the Elementor form.', 'wp-line-notify' );
+    		$message = ( !empty( $settings['line_notify_prompt_text'] ) ) ? $settings['line_notify_prompt_text'] : __( 'You have a message from the Elementor Form.', 'wp-line-notify' );
 
-		$form_data = $record->get( 'fields' );
+    		$form_data = $record->get( 'fields' );
 
-		// Normalize the Form Data
-		foreach ( $form_data as $id => $field ) {
-            $title = (!empty($field['title'])) ? $field['title'] : $id;
-            $valeu = (!empty($field['value'])) ? $field['value'] : '';
-			$message .= "\n[{$title}] {$valeu}";
-		}
+    		// Normalize the Form Data
+    		foreach ( $form_data as $id => $field ) {
+                $title = (!empty($field['title'])) ? $field['title'] : $id;
+                $valeu = (!empty($field['value'])) ? $field['value'] : '';
+    			$message .= "\n[{$title}] {$valeu}";
+    		}
 
-        $send = new sig_line_notify();
-        $send->send_msg( $message );
+            $sender = new WpLineNotify();
+            $sender->send_msg( $this->token, $message );
+        }
 	}
 
 	/**
