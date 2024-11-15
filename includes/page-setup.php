@@ -9,6 +9,9 @@ if( !isset($this->option['token']) || empty($this->option['token']) ): ?>
     <p><?php _e( 'LINE Notify token is required!' , 'wp-line-notify' ); ?></p>
 </div>
 <?php endif; ?>
+<div class="notice notice-error is-dismissible">
+    <p><?php _e( 'From April 1, 2025, all LINE Notify features will become unavailable.', 'wp-line-notify' )?></p>
+</div>
 
 <div class="wrap">
 

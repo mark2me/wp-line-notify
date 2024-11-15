@@ -4,8 +4,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Plugins - WP LINE Notify - Stable (latest release)\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/wp-line-notify\n"
-"POT-Creation-Date: 2023-01-13T07:24:20+01:00\n"
-"PO-Revision-Date: 2023-01-13 14:25+0800\n"
+"POT-Creation-Date: 2024-11-15T04:22:59+00:00\n"
+"PO-Revision-Date: 2024-11-15 12:23+0800\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: zh_TW\n"
@@ -13,21 +13,25 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Poedit 3.2.2\n"
+"X-Generator: Poedit 3.5\n"
 
 #. Plugin Name of the plugin
+#: wp-line-notify.php
 msgid "WordPress LINE Notify"
 msgstr "WordPress LINE Notify"
 
 #. Description of the plugin
+#: wp-line-notify.php
 msgid "This plugin can send a alert message by LINE Notify"
 msgstr "這個外掛可以藉由 LINE Notify 傳送提醒訊息給你"
 
 #. Author of the plugin
+#: wp-line-notify.php
 msgid "Simon Chuang"
 msgstr "Simon Chuang"
 
 #. Author URI of the plugin
+#: wp-line-notify.php
 msgid "https://github.com/mark2me/wp-line-notify"
 msgstr "https://github.com/mark2me/wp-line-notify"
 
@@ -179,145 +183,149 @@ msgstr "訂單備註"
 msgid "You have a new order."
 msgstr "你有一筆新的訂單。"
 
-#: includes/class-woo.php:98 includes/class-woo.php:110
+#: includes/class-woo.php:98 includes/class-woo.php:109
 msgid "WooCommerce"
 msgstr "WooCommerce"
 
-#: includes/class-woo.php:99 includes/page-setup.php:143
-#: includes/page-setup.php:167
+#: includes/class-woo.php:99 includes/page-setup.php:144
+#: includes/page-setup.php:168
 msgid "This plugin is not install or active."
 msgstr "這個外掛尚未安裝或是啟用。"
 
-#: includes/class-woo.php:113
+#: includes/class-woo.php:112
 msgid "Add a new order"
 msgstr "新增一筆新的訂單"
 
-#: includes/class-woo.php:119
+#: includes/class-woo.php:118
 msgid "You can use these tags in the message template:"
 msgstr "你可以在訊息範本中使用這些標籤："
 
-#: includes/class-woo.php:120
+#: includes/class-woo.php:119
 msgid "(Click tag to insert into the template)"
 msgstr "(點擊標籤自動加入到範本中)"
 
-#: includes/class-woo.php:124
+#: includes/class-woo.php:123
 msgid "Default Item"
 msgstr "預設項目"
 
-#: includes/class-woo.php:134
+#: includes/class-woo.php:133
 msgid "Billing Fields"
 msgstr "購買人欄位"
 
-#: includes/class-woo.php:140
+#: includes/class-woo.php:139
 msgid "Shipping Fields"
 msgstr "收件人欄位"
 
-#: includes/class-woo.php:146
+#: includes/class-woo.php:145
 msgid "Additional Fields"
 msgstr "額外欄位"
 
-#: includes/class-woo.php:155
+#: includes/class-woo.php:154
 msgid "Buyer Information"
 msgstr "購買人資訊"
 
-#: includes/class-woo.php:162
+#: includes/class-woo.php:161
 msgid "Recipient Information"
 msgstr "收件人資訊"
 
-#: includes/class-woo.php:174
+#: includes/class-woo.php:173
 msgid "Template"
 msgstr "範本"
 
-#: includes/class-woo.php:179
+#: includes/class-woo.php:178
 msgid ""
 "* If you do not enter any text, the system will use the default template."
 msgstr "* 如果您不輸入任何文字，系統將使用預設範本。"
 
-#: includes/class-woo.php:185
+#: includes/class-woo.php:184
 msgid "Order status changed"
 msgstr "訂單狀態變更"
 
-#: includes/page-setup.php:15 wp-line-notify.php:127 wp-line-notify.php:163
+#: includes/page-setup.php:13
+msgid "From April 1, 2025, all LINE Notify features will become unavailable."
+msgstr "自2025年4月1日起，LINE Notify的所有功能將無法操作。"
+
+#: includes/page-setup.php:18 wp-line-notify.php:120 wp-line-notify.php:155
 msgid "Line Notify Setting"
 msgstr "Line Notify 設定"
 
-#: includes/page-setup.php:23
+#: includes/page-setup.php:26
 msgid "Line Notify Token"
 msgstr "Line Notify 權杖"
 
-#: includes/page-setup.php:26
+#: includes/page-setup.php:29 includes/page-setup.php:194
 msgid "General"
 msgstr "通用"
 
-#: includes/page-setup.php:40
+#: includes/page-setup.php:41
 msgid "Access token valid."
 msgstr "存取權杖有效。"
 
-#: includes/page-setup.php:40
+#: includes/page-setup.php:41
 msgid "Invalid access token."
 msgstr "無效的存取權杖。"
 
-#: includes/page-setup.php:43 wp-line-notify.php:169
+#: includes/page-setup.php:44 wp-line-notify.php:161
 msgid "* Generate access token on LINE website"
 msgstr "* 到 LINE 官方網站申請存取的權杖"
 
-#: includes/page-setup.php:51
+#: includes/page-setup.php:52
 msgid "When to send message ?"
 msgstr "何時傳送訊息？"
 
-#: includes/page-setup.php:55
+#: includes/page-setup.php:56
 msgid "Post"
 msgstr "文章"
 
-#: includes/page-setup.php:57
+#: includes/page-setup.php:58
 msgid "Publish"
 msgstr "發佈"
 
-#: includes/page-setup.php:59 includes/page-setup.php:74
+#: includes/page-setup.php:60 includes/page-setup.php:75
 msgid "Select roles:"
 msgstr "選取使用者角色:"
 
-#: includes/page-setup.php:72
+#: includes/page-setup.php:73
 msgid "Pending"
 msgstr "待審閱"
 
-#: includes/page-setup.php:87
+#: includes/page-setup.php:88
 msgid "Comments"
 msgstr "留言"
 
-#: includes/page-setup.php:93
+#: includes/page-setup.php:94
 msgid "Add a new comment"
 msgstr "新增新的留言"
 
-#: includes/page-setup.php:98
+#: includes/page-setup.php:99
 msgid "Users"
 msgstr "使用者"
 
-#: includes/page-setup.php:104
+#: includes/page-setup.php:105
 msgid "User register"
 msgstr "使用者註冊時"
 
-#: includes/page-setup.php:118
+#: includes/page-setup.php:119
 msgid "Contact Form 7"
 msgstr "Contact Form 7"
 
-#: includes/page-setup.php:124
+#: includes/page-setup.php:125
 msgid "When a new contact message is received."
 msgstr "當收到新的聯絡訊息時。"
 
-#: includes/page-setup.php:136
+#: includes/page-setup.php:137
 msgid "(Edit message template)"
 msgstr "(編輯郵件訊息範本)"
 
-#: includes/page-setup.php:155
+#: includes/page-setup.php:156
 msgid "Elementor Pro"
 msgstr "Elementor Pro"
 
-#: includes/page-setup.php:163
+#: includes/page-setup.php:164
 msgid "When a new message is received from the Elementor Pro form widget."
 msgstr "當從 Elementor Pro Form 收到新的訊息時。"
 
-#: includes/page-setup.php:165
+#: includes/page-setup.php:166
 msgid ""
 "You have to find the \"Actions After Submit\" in the form editing function "
 "and add a new action called \"Line notify\"."
@@ -325,59 +333,64 @@ msgstr ""
 "你必需在編輯表單中找到 [Actions After Submit]，並新增一個名稱為「Line "
 "notify」的動作。"
 
-#: includes/page-setup.php:180
+#: includes/page-setup.php:181
 msgid "Test Line Notify"
 msgstr "測試 Line Notify"
 
-#: includes/page-setup.php:187
-msgid "Test Send"
-msgstr "測試寄送"
+#: includes/page-setup.php:190
+msgid "Send to"
+msgstr "寄送給"
 
-#: includes/page-setup.php:215
-msgid "Are you sure to revoke notification configurations?"
-msgstr "你確定要撤銷通知權杖嗎？"
+#: includes/page-setup.php:207
+msgid "Test message"
+msgstr "測試訊息"
 
-#: wp-line-notify.php:116
+#: includes/page-setup.php:212
+msgid "Send test"
+msgstr "寄送測試"
+
+#: wp-line-notify.php:109
 msgid "Settings"
 msgstr "設定通知項目"
 
-#: wp-line-notify.php:128
+#: wp-line-notify.php:121
 msgid "WP Line Notify"
 msgstr "WP Line Notify"
 
-#: wp-line-notify.php:166
+#: wp-line-notify.php:158
 msgid "Line Notify Token:"
 msgstr "Line Notify 權杖:"
 
-#: wp-line-notify.php:208
+#: wp-line-notify.php:200
 msgid "publish a post"
 msgstr "發佈一篇文章"
 
-#: wp-line-notify.php:209
+#: wp-line-notify.php:201
 msgid "pending a post"
 msgstr "送交審閱一篇文章"
 
-#: wp-line-notify.php:263
+#: wp-line-notify.php:255
 msgid "You have a new comment."
 msgstr "你有一則新的留言。"
 
-#: wp-line-notify.php:281
+#: wp-line-notify.php:273
 msgid "You have a new user register."
 msgstr "你有一位新使用者註冊。"
 
-#: wp-line-notify.php:282
+#: wp-line-notify.php:274
 msgid "Username:"
 msgstr "使用者名稱："
 
-#: wp-line-notify.php:399
+#. translators: %1$s is order id, %2$s is order state.
+#: wp-line-notify.php:392
 msgid "There is an order id %1$d, and the state is changed to %2$s."
 msgstr "有一筆訂單 %1$d 的狀態改變為 %2$s。"
 
-#: wp-line-notify.php:422
+#: wp-line-notify.php:415
 msgid "You have a new contact message.\n"
 msgstr "你有一則新的聯絡訊息。\n"
 
-#: wp-line-notify.php:503
+#: wp-line-notify.php:499
 msgid "This is a Line notify plugin test."
 msgstr "這是一個 Line Notify 外掛測試。"
 
@@ -392,6 +405,12 @@ msgstr "發送測試完成！"
 #: wp-line-notify.php:517
 msgid "Error on send LINE Notify."
 msgstr "LINE Notify 傳送失敗。"
+
+#~ msgid "Test Send"
+#~ msgstr "測試寄送"
+
+#~ msgid "Are you sure to revoke notification configurations?"
+#~ msgstr "你確定要撤銷通知權杖嗎？"
 
 #~ msgid "Revoke token"
 #~ msgstr "撤銷權杖"

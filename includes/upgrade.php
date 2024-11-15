@@ -8,7 +8,7 @@ class sig_line_notify_upgrade {
 
     public $option_name;
 
-    public $options;
+    public $option;
 
     public $option_ver;
 
@@ -20,8 +20,7 @@ class sig_line_notify_upgrade {
 
         $this->option_name = $option_name;
 
-        $this->option = get_option( $option_name );
-        if( empty($this->option) ) $this->option = [];
+        $this->option = get_option( $option_name, [] );
 
         $this->option_ver = ( isset($this->option['version']) ) ? $this->option['version'] : '1.0';
 

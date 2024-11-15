@@ -2,9 +2,9 @@
 Contributors: simon_tw
 Tags: notify, plugin, line, WooCommerce, Elementor, Contact Form
 Requires at least: 5.4
-Tested up to: 6.3
-Requires PHP: 7.4
-Stable tag: 1.4.5
+Tested up to: 6.7
+Requires PHP: 8.0
+Stable tag: 1.4.6
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -31,6 +31,10 @@ e.g.
 2. User Line Notify token setting.
 
 == Changelog ==
+
+= 1.4.6 - 2024-11-15 =
+* Updated for WordPress 6.7
+* Fixed bug for PHP 8.2
 
 = 1.4.5 - 2023-08-24 =
 * Improved: Filter user ID.
